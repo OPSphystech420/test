@@ -1,1320 +1,183 @@
-
-
-
 <html>
+
 <head>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.7/lib/theme-chalk/index.css">
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.min.js"></script>
-        <script src="https://unpkg.com/element-ui@2.15.7/lib/index.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <style>
-            * {
-                padding: 0;
-                margin: 0;
-            }
-            
-            .ayimgui {
-                position: fixed;
-                width: 360px;
-                height: 320px;
-                top: calc(50% - 180px);
-                left: calc(50% - 180px);
-                z-index: 999;
-                border-radius: 8px;
-                overflow: hidden;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-            }
-            
-            .ayimgui::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-image: url("https://cdn.discordapp.com/attachments/1125329626546327573/1130027297945169990/Game_Glitch.png");
-                background-size: cover;
-                opacity: 0.6;
-                z-index: -1;
-            }
-            
-            .onlyTitle {
-                height: 21px !important;
-            }
-            
-            .ayimgui .aytitle {
-                padding: 0 5px;
-                font-size: 16px;
-                background-color: #ff000;
-            }
-            
-            .ayimgui .aytitle .titleClose {
-                position: absolute;
-                top: 3px;
-                right: 6px;
-                color: #f00;
-            }
-            
-            .ayimgui .aytitle .titleClose:hover {
-                color: #ff000;
-            }
-            
-            .aybody {
-                /* ... */
-                overflow: visible; /* "auto" на "visible" */
-                /* ... */
-                height: auto; /* "auto" или фиксированную высоту */
-                /* ... */
-            }
-            
-            
-            .ayimgui .aybody {
-                padding: 15px;
-                height: calc(100% - 21px - 15px - 15px);
-                overflow: auto;
-                font-size: 14px;
-            }
-            
-            .aytext {
-                width: 100%;
-                margin-bottom: 10px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-around;
-                color: black;
-            }
-            
-            .el-checkbox {
-                margin: 0px;
-            }
-            
-            .el-checkbox__label {
-                color: black;
-            }
-            
-            .el-checkbox__input.is-checked+.el-checkbox__label {
-                color: #400;
-            }
-            
-            .el-checkbox__inner {
-                background-color: rgb(254, 254, 254);
-                border: none;
-            }
-            
-            .el-radio {
-                margin: 0px 0;
-            }
-            
-            .el-radio__label {
-                color: #364;
-            }
-            
-            .el-radio__input.is-checked+.el-radio__label {
-                color: #409EFF;
-            }
-            
-            .el-radio__inner {
-                background-color: rgb(254, 254, 254);
-                border: none;
-            }
-            
-            .el-radio__input.is-checked .el-radio__inner {
-                background-color: rgb(254, 254, 254);
-            }
-            
-            .el-radio__inner::after {
-                width: 10px;
-                height: 10px;
-                background-color: rgb(58, 138, 247);
-            }
-            
-            .onlySelect {
-                background-color: rgb(254, 254, 254);
-                border: none;
-            }
-            
-            .onlySelect .el-select-dropdown__item {
-                color: #000;
-            }
-            
-            .onlySelect .el-select-dropdown__item.hover,
-            .el-select-dropdown__item:hover:hover {
-                background-color: transparent;
-            }
-            
-            .onlySelect .popper__arrow {
-                border-bottom-color: rgb(254, 254, 254) !important;
-            }
-            
-            .onlySelect.el-popper[x-placement^=bottom] .popper__arrow::after {
-                border-bottom-color: rgb(8254, 254, 254) !important;
-            }
-            
-            .el-select {
-                width: 100%;
-            }
-            
-            .el-select .el-input {
-                background-color: rgb(254, 254, 254);
-            }
-            
-            .el-select .el-input__suffix {
-                background-color: rgb(160, 196, 243);
-                color: #000;
-                right: 0;
-            }
-            
-            .el-select .el-select__caret {
-                color: #000;
-            }
-            
-            .el-select .el-input__inner {
-                background-color: transparent;
-                border: none;
-                color: #000;
-            }
-            
-            .el-select .el-input .el-select__caret {
-                color: #000;
-            }
-            
-            .el-scrollbar .el-scrollbar__bar {
-                opacity: 1 !important;
-            }
-            
-            .el-button {
-                font-size: 14px;
-                padding: 5px 10px;
-                line-height: 14px;
-                color: #000;
-                background-color: #B8D1F2;
-            }
-            
-            .el-button:hover {
-                opacity: .7;
-                color: #000;
-                background-color: #B8D1F2;
-            }
-            
-            .el-button:focus,
-            .el-button:hover {
-                color: #000;
-                background-color: #B8D1F2;
-            }
-            
-            .aycollapse {
-                width: 100%;
-                font-size: 14px;
-                background-color: rgb(177, 206, 240);
-                color: #000;
-            }
-            
-            .aytab {
-                width: 100%;
-                height: 20px;
-                display: flex;
-                border-bottom: 2px solid rgb(200, 217, 233);
-            }
-            
-            .aytab span {
-                padding: 0 7px;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: rgb(189, 199, 208);
-                color: #000;
-                font-size: 14px;
-                font-weight: 500;
-                margin-left: 7px;
-                border-radius: 6px 6px 0 0;
-                cursor: pointer;
-            }
-            
-            .el-input input {
-                background-color: rgb(254, 254, 254);
-                border: none;
-                border-radius: 0px;
-            }
-            
-            .toggle_input {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 5;
-                opacity: 0;
-                cursor: pointer;
-            }
-            
-            .toggle_label {
-                width: 37.5px;
-                height: 20px;
-                background: #ccc;
-                position: relative;
-                display: inline-block;
-                border-radius: 10px;
-                transition: 1s;
-                box-sizing: border-box;
-            }
-            
-            .toggle_label:after {
-                content: "";
-                position: absolute;
-                width: 18px;
-                height: 18px;
-                border-radius: 100%;
-                left: 1.5;
-                top: 0.9;
-                z-index: 0;
-                background: #fff;
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-                transition: 1s;
-            }
-            
-            .toggle_input:checked+.toggle_label {
-                background-color: black;
-            }
-            
-            .toggle_input:checked+.toggle_label:after {
-                left: 18.5px;
-            }
-            
-            .toggle_button {
-                position: relative;
-                width: 37.5px;
-                height: 17.5px;
-                margin-right: -195px;
-                margin-top: 3px;
-                margin-bottom: 5px;
-            }
-            
-            button {
-                height: 30px;
-                background-color: #84848450;
-                display: inline-block;
-                cursor: pointer;
-                text-align: center;
-                text-decoration: none;
-                outline: none;
-                border: none;
-                border-radius: 5px;
-            }
-            
-            button:active {
-                transformer: translateY(2px);
-            }
-            
-            input[type=radio] {
-                width: 15px;
-                height: 15px;
-                margin-right: 3px;
-                border: none;
-                outline-style: none;
-                -webkit-appearance: none;
-                vertical-align: middle;
-                border: 1px solid #686868F0;
-                border-radius: 100%;
-            }
-            
-            input[type=radio]:checked {
-                border: 3px solid #2F7DCDF0;
-                background: #E8E8E8;
-            }
-            
-            input[type=checkbox] {
-                visibility: hidden;
-                vertical-align: middle;
-                margin-bottom: 25px;
-                cursor: pointer;
-                position: relative;
-                width: 0px;
-                height: 0px;
-            }
-            
-            input[type=checkbox]::after {
-                position: absolute;
-                top: 0;
-                margin-top: 2px;
-                width: 14px;
-                height: 14px;
-                border-radius: 3px;
-                background-color: rgba(0, 0, 0, 0);
-                display: inline-block;
-                visibility: visible;
-                text-align: center;
-                content: ' ';
-            }
-            
-            input[type=checkbox]:checked::after {
-                content: "✓";
-                color: #FFF;
-                border-color: #B8B8B8;
-                background-color: #4498F7;
-                font-size: 12px;
-                font-weight: bold;
-            }
-            
-            input[type=range] {
-                -webkit-appearance: none;
-            }
-            
-            input[type=range]:focus {
-                outline: none;
-            }
-            
-            input[type=range]::-webkit-slider-runnable-track {
-                height: 15x;
-                cursor: pointer;
-                animate: 0.2s;
-                background: #68686830;
-                border-radius: 5px;
-                border: 1px solid #010101;
-            }
-            
-            input[type=range]::-webkit-slider-thumb {
-                border: 1.5px solid transparent;
-                height: 20px;
-                width: 10px;
-                border-radius: 11px;
-                background: #EEEEEEE0;
-                cursor: pointer;
-                -webkit-appearance: none;
-                margin-top: -0.2px;
-            }
-            
-            input[type=range]:focus::-webkit-slider-runnable-track {
-                background: #367ebd;
-            }
-            
-            .scrollbar {
-                overflow-x: hidden;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .scrollbar::-webkit-scrollbar {
-                width: 5px;
-                height: 5px;
-                background-color: transparent;
-            }
-            
-            .scrollbar::-webkit-scrollbar-track {
-                -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-                border-radius: 10px;
-                background-color: transparent;
-            }
-            
-            .scrollbar::-webkit-scrollbar-thumb {
-                border-radius: 15px;
-                -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-                background-color: transparent;
-            }
-            
-            .menubox {
-                width: 70px;
-                height: 30px;
-                line-height: 30px;
-                text-align: center;
-            }
-            
-            .menubox.current {
-                background-color: #BBBBBB;
-            }
-            
-            .menuview {
-                display: none;
-                overflow-x: hidden;
-                overflow-y: scroll;
-                height: 100%;
-            }
-            
-            .menuviewer {
-                overflow-x: hidden;
-                overflow-y: scroll;
-                height: 100%;
-            }
-            
-        </style>
-        
-        <style>
-            /* Стили для меню */
-            .menuview {
-                display: none;
-                overflow-x: hidden;
-                overflow-y: scroll;
-                height: 100%;
-            }
-            
-            .command {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 10px;
-            }
-            
-            .command-name {
-                color: black;
-            }
-            
-            .copy-button {
-                height: 30px;
-                background-color: #BDC7D0;
-                display: inline-block;
-                cursor: pointer;
-                text-align: center;
-                text-decoration: none;
-                outline: none;
-                border: none;
-                border-radius: 5px;
-                padding: 0 10px;
-                color: black;
-            }
-        </style>
-        
-        <style>
-            .copy-button {
-                background-color: #BDC7D0;
-                color: black;
-                padding: 5px 10px;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-        </style>
-        
-        <style>
-            .command {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 10px;
-            }
-            
-            .command-name {
-                color: #BDC7D0;
-            }
-            
-            .copy-button {
-                font-style: italic;
-                height: 30px;
-                background-color: #BDC7D0;
-                display: inline-block;
-                cursor: pointer;
-                text-align: center;
-                text-decoration: none;
-                outline: none;
-                border: none;
-                border-radius: 5px;
-                padding: 0 10px;
-                color: black;
-                /* Добавляем параметры анимации при нажатии */
-                transition: background-color 0.2s ease, transform 0.1s ease;
-              }
-
-              /* Добавляем стили для анимации при нажатии */
-              .copy-button:active {
-                background-color: #A9B5BE;
-                transform: translateY(1px);
-              }
-            
-            .menuview {
-                display: none;
-                overflow-x: hidden;
-                overflow-y: scroll;
-                height: 100%;
-            }
-            
-            .current {
-                display: block;
-            }
-        </style>
-        
-        <style>
-            /* ... */
-            
-            .aytab {
-                /* ... */
-            }
-            
-            .category {
-                margin-bottom: 10px;
-            }
-            
-            .menuview {
-                margin-top: 10px;
-            }
-            
-            .command {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 10px;
-            }
-            
-            .command-name {
-                flex-grow: 1; /* Добавлено свойство flex-grow */
-                margin-left: 2px; /* Изменено свойство margin-left */
-                margin-right: 5px; /* Изменено свойство margin-right */
-            }
-            
-            .fuck-you-name {
-                color: #BDC7D0;
-                flex-grow: 1; /* Добавлено свойство flex-grow */
-                margin-left: 20px; /* Изменено свойство margin-left */
-                margin-right: 5px; /* Изменено свойство margin-right */
-            }
-            
-            .i-fuck-you {
-                color: #BDC7D0;
-                flex-grow: 1; /* Добавлено свойство flex-grow */
-                margin-left: 5px; /* Изменено свойство margin-left */
-                margin-right: 5px; /* Изменено свойство margin-right */
-            }
-            
-            .checkbox-container {
-                display: flex;
-                align-items: center;
-                margin-top: 5px;
-            }
-            
-            .checkbox-container input[type="checkbox"] {
-                visibility: hidden;
-                vertical-align: middle;
-                margin-right: 5px;
-                cursor: pointer;
-            }
-            
-            .checkbox-container input[type="checkbox"]::after {
-                position: absolute;
-                top: 0;
-                margin-top: 1px;
-                width: 14px;
-                height: 14px;
-                border: 2px solid #686868;
-                border-radius: 3px;
-                background-color: rgba(0, 0, 0, 0);
-                display: inline-block;
-                visibility: visible;
-                text-align: center;
-                content: ' ';
-            }
-            
-            .checkbox-container input[type="checkbox"]:checked::after {
-                content: "✓";
-                color: #FFF;
-                border-color: #B8B8B8;
-                background-color: #4498F7;
-                font-size: 12px;
-                font-weight: bold;
-            }
-            
-            .number-input-container {
-                display: flex;
-                align-items: center;
-                margin-left: 10px;
-            }
-            
-            .number-input-container input[type="number"] {
-                width: 60px;
-                margin-left: 10px;
-                margin-right: 1px;
-                vertical-align: middle;
-                border: 2px solid #686868;
-                border-radius: 3px;
-                padding: 2px;
-            }
-            
-            
-            
-            /* ... */
-            
-            *{
-                padding: 0;
-                margin: 0;
-            }
-            body{
-                .container{
-                    width: 40vmin;
-                    top: 50%;
-                    left: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-around;
-                    padding: 1px 1px;
-                    border-radius: 5px;
-                }
-            }
-            input[type="range"]{
-                position: relative;
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                display: block;
-                width: 80%;
-                height: 8px;
-                background-color: #B8D1F2;
-                border-radius: 8px;
-                outline: none;
-            }
-            input[type="range"]::-webkit-slider-runnable-track{
-                -webkit-appearance: none;
-                height: 8px;
-            }
-            input[type="range"]::-moz-track{
-                -moz-appearance: none;
-                height: 8px;
-            }
-            input[type="range"]::-ms-track{
-                appearance: none;
-                height: 8px;
-            }
-            input[type="range"]::-webkit-slider-thumb{
-                -webkit-appearance: none;
-                height: 20px;
-                width: 20px;
-                background-color: #3264fe;
-                border-radius: 50%;
-                cursor: pointer;
-                margin-top: -6px;
-                border: none;
-            }
-            input[type="range"]::-moz-range-thumb{
-                -webkit-appearance: none;
-                height: 20px;
-                width: 20px;
-                background-color: #B8D1F2;
-                border-radius: 50%;
-                cursor: pointer;
-                margin-top: -6px;
-                border: none;
-            }
-            input[type="range"]::-ms-thumb{
-                appearance: none;
-                height: 20px;
-                width: 20px;
-                background-color: #B8D1F2;
-                border-radius: 50%;
-                cursor: pointer;
-                margin-top: -6px;
-                border: none;
-            }
-            input[type="range"]:active::-webkit-slider-thumb{
-                background-color: #ffffff;
-                border: 3px solid #B8D1F2;
-            }
-            #slider-value{
-                width: 12%;
-                position: relative;
-                color: #ffffff;
-                text-align: center;
-                font-family: "Roboto Mono",monospace;
-                padding: 1px 0;
-                border-radius: 5px;
-            }
-            
-        </style>
-        
-        <style>
-            body {
-              color: #BDC7D0;
-              margin: 0;
-            }
-
-            #contententen {
-                position: absolute;
-                width: 1px;
-                height: 10px;
-                          transform: translate(32500%, -100%);
-            }
-
-            #contententen.on {
-              -webkit-animation-name: in-out;
-              animation-name: in-out;
-              -webkit-animation-duration: 0.7s;
-              animation-duration: 0.7s;
-              -webkit-animation-timing-function: linear;
-              animation-timing-function: linear;
-              -webkit-animation-iteration-count: 1;
-              animation-iteration-count: 1;
-            }
-
-            .input {
-              box-sizing: border-box;
-              width: 10px;
-              height: 10px;
-              border: 1px solid #BDC7D0;
-              border-radius: 50%;
-              background: none;
-              color: #BDC7D0;
-              font-size: 16px;
-              font-weight: 400;
-              font-family: Roboto;
-              outline: 0;
-              -webkit-transition: width 0.4s ease-in-out, border-radius 0.8s ease-in-out,
-                padding 0.2s;
-              transition: width 0.4s ease-in-out, border-radius 0.8s ease-in-out,
-                padding 0.2s;
-              -webkit-transition-delay: 0.4s;
-              transition-delay: 0.4s;
-              -webkit-transform: translate(-100%, -50%);
-              -ms-transform: translate(-100%, -50%);
-              transform: translate(-100%, -50%);
-            }
-
-            .search {
-              background: none;
-              position: absolute;
-              top: 0px;
-              left: 0;
-              height: 10px;
-              width: 10px;
-              padding: 0;
-              border-radius: 100%;
-              outline: 0;
-              border: 0;
-              color: inherit;
-              cursor: pointer;
-              -webkit-transition: 0.2s ease-in-out;
-              transition: 0.2s ease-in-out;
-              -ms-transform: translate(-100%, -50%);
-              transform: translate(-100%, -50%);
-            }
-
-            .search:before {
-              content: "";
-              position: absolute;
-              width: 5px;
-              height: 2px;
-              background-color: #BDC7D0;
-              -webkit-transform: rotate(45deg);
-              -ms-transform: rotate(45deg);
-              transform: rotate(45deg);
-              margin-top: 5px;
-              margin-left: 3.5px;
-              -webkit-transition: 0.2s ease-in-out;
-              transition: 0.2s ease-in-out;
-            }
-
-            .close {
-              -webkit-transition: 0.4s ease-in-out;
-              transition: 0.4s ease-in-out;
-              -webkit-transition-delay: 0.4s;
-              transition-delay: 0.4s;
-            }
-
-            .close:before {
-              content: "";
-              position: absolute;
-              width: 7px;
-              height: 2px;
-              margin-top: -1px;
-              margin-left: -3.5px;
-              background-color: #BDC7D0;
-              -webkit-transform: rotate(45deg);
-              -ms-transform: rotate(45deg);
-              transform: rotate(45deg);
-              -webkit-transition: 0.2s ease-in-out;
-              transition: 0.2s ease-in-out;
-            }
-
-            .close:after {
-              content: "";
-              position: absolute;
-              width: 7px;
-              height: 2px;
-              background-color: #BDC7D0;
-              margin-top: -1px;
-              margin-left: -3.5px;
-              cursor: pointer;
-              -webkit-transform: rotate(-45deg);
-              -ms-transform: rotate(-45deg);
-              transform: rotate(-45deg);
-            }
-
-            .square {
-              box-sizing: border-box;
-              padding: 0 8px 0 2px;
-              width: 190px;
-              height: 10px;
-              border: 1px solid #BDC7D0;
-              border-radius: 0;
-              background: none;
-              color: #BDC7D0;
-              font-family: Roboto;
-              font-size: 7px;
-              font-weight: 400;
-              outline: 0;
-              -webkit-transition: width 0.4s ease-in-out, border-radius 0.4s ease-in-out,
-                padding 0.2s;
-              transition: width 0.4s ease-in-out, border-radius 0.4s ease-in-out,
-                padding 0.2s;
-              -webkit-transition-delay: 0.4s, 0s, 0.4s;
-              transition-delay: 0.4s, 0s, 0.4s;
-              -webkit-transform: translate(-100%, -50%);
-              -ms-transform: translate(-100%, -50%);
-              transform: translate(-100%, -50%);
-            }
-            
-            
-            
-            
-        </style>
+    <link rel="stylesheet" href="https://cdn.discordapp.com/attachments/1023410628116881438/1024477910955995146/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.15.10/index.js" integrity="sha512-BUA4cDZ7FobRei+UGlYlPSNKPlYoHlw3nanEKPGeotSUvfPTDk9mHparLe4R0gfW1vi6FvowpgflsFYwsXkwwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
-
-
 
 <body>
     <div id="app">
-        <div :class="!ifshow ? 'onlyTitle ayimgui' : 'ayimgui'" ref="menuMain">
-            <div class="aytitle" @touchstart="titleTouchStart" @touchmove="titleTouchMove">
-                <i :class="ifshow ? 'el-icon-caret-bottom' : 'el-icon-caret-top'" @click="ifshow = !ifshow"></i>
-                <font color="#BDC7D0">
-                    <span class="title-age" style="margin-left:5px">Cmd_menu</span>
-                </font>
-                <form id="contententen" @submit.prevent>
-
-                    <input type="text" name="input" class="input" id="search-input" v-model="searchQuery" :class="{ 'square': isSearchExpanded }" @keydown.enter.prevent>
-
-                      <button type="reset" class="search" id="search-btn" :class="{ 'close': isSearchExpanded }" @click="toggleSearch"></button>
-
-                </form>
-
-                <i class="titleClose el-icon el-icon-close" @click="closeimgui"></i>
-            </div>
-            
-            
-            
-            
-
-           <div class="main-content">
-              <!-- Search bar -->
-              
-              <div v-if="!isSearchExpanded" class="aybody">
-                  
-                  
-                  
-                  
-                  <div class="aytab">
-                      <span class="category" @click="changeTab('one')" :style="{background: tabValue === 'one' ? '#B1CEF0' : '#BDC7D0'}">Bosses</span>
-                      <span class="category" @click="changeTab('two')" :style="{background: tabValue === 'two' ? '#B1CEF0' : '#BDC7D0'}">Premium</span>
-                      <span class="category" @click="changeTab('three')" :style="{background: tabValue === 'three' ? '#B1CEF0' : '#BDC7D0'}">Commands</span>
-                      <span class="category" @click="changeTab('four')" :style="{background: tabValue === 'four' ? '#B1CEF0' : '#bdc7d0'}">Skins</span>
-                      <span class="category" @click="changeTab('five')" :style="{background: tabValue === 'five' ? '#B1CEF0' : '#bdc7d0'}">Dinos</span>
-                  </div>
-                  
-                  
-                  
-                  <div v-if="tabValue === 'one' || tabValue === 'five'">
-                      <div class="command">
-                          <div class="checkbox-container">
-                              <input type="checkbox" v-model="isChecked">
-                                  <span class="checkmark"></span>
-                          </div>
-                          <div class="fuck-you-name">Tamed</div>
-                          <div class="number-input-container">
-                              <input type="number" min="1" max="300" v-model="commandValue" placeholder="100">
-                                  <div class="i-fuck-you">lvl</div>
-                          </div>
-                      </div>
-                  </div>
-                  <div v-else>
-                      <div v-if="tabValue === 'two'">
-                          <!-- Здесь добавляем условие для скрытия всего блока command -->
-                          <body>
-                              <head>
-                                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                                      <title>Custom Range Slider</title>
-                                      <!-- Google Fonts -->
-                                      <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600&display=swap" rel="stylesheet">
-                                          <!-- Stylesheet -->
-                                          <link rel="stylesheet" href="style.css">
-                                          </head>
-                              <div class="container">
-                                  <div id="slider-value">{{ commandSliderValue }}</div>
-                                  <input type="range" id="my-slider" min="1" max="100" value="1" v-model="commandSliderValue" @input="updateCommandValue">
-                              </div>
-                              <!-- Script -->
-                              <script src="script.js"></script>
-                          </body>
-                      </div>
-                  </div>
-                  
-                  
-                  
-                  
-                  
-                  <div class="menuview" :class="{current: tabValue === 'one'}">
-                      
-                      <div class="category">
-                          <div class="command" style="text-align: center;">
-                              <div class="command-name" style="color: #B8D1F2; font-family: Arial; font-weight: bold; font-size: 24px; margin: 0 auto;">Bosses</div>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Yeti</div>
-                              <button class="copy-button" @click="copyToClipboard(`SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Bigfoot/Yeti_Character_BP.Yeti_Character_BP_C\'&quot; 10 0 0 ${commandValue}`)">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Zomdodo</div>
-                              <button class="copy-button" @click="copyToClipboard(`SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Dodo/ZombieDodo_Character_BP.ZombieDodo_Character_BP_C\'&quot; 10 0 0 ${commandValue}`)">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Argentustus</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Argentavis/Boss_Argent_Character_BP.Boss_Argent_Character_BP_C\'&quot; 10 0 0 ${commandValue}')">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Obsidioequus</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Chalicotherium/Boss_Chalico_Character_BP.Boss_Chalico_Character_BP_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Cubozoa Multis</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Cnidaria/Boss_Cnidaria_Character_BP.Boss_Cnidaria_Character_BP_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Dodobitus</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Dodo/Boss_Dodo_Character_BP.Boss_Dodo_Character_BP_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Doedicurus Vastus</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Doedicurus/Boss_Doed_Character_BP.Boss_Doed_Character_BP_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Gula Beetle</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/DungBeetle/Boss_DungBeetle_Character_BP.Boss_DungBeetle_Character_BP_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Beelzemorbus</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Toad/Boss_Toad_Character_BP.Boss_Toad_Character_BP_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Noctis</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Equus/Anticorn_Character_BP.Anticorn_Character_BP_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                          <div class="command" style="text-align: center;">
-                              <div class="command-name" style="color: #B8D1F2; font-family: Arial; font-weight: bold; font-size: 24px; margin: 0 auto;">Dungeon</div>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Argentustus Obstacle</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/ArgentObstacle.ArgentObstacle_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Broodmother Obstacle</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/BroodmotherObstacle.BroodmotherObstacle_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Obsidioequus Obstacle</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/ChalicoObstacle.ChalicoObstacle_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Cnidaria Obstacle</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/CnidariaObstacle.CnidariaObstacle_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Dodobitus Obstacle</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/DodoObstacle.DodoObstacle_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Doedicurus Obstacle</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/Doed_Obstacle.Doed_Obstacle_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Dung Beetle Obstacle</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/DungBeetleObstacle.DungBeetleObstacle_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Gorilla Obstacle</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/GorillaObstacle.GorillaObstacle_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                          <div class="command">
-                              <div class="command-name">Toed Obstacle</div>
-                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/ToadObstacle.ToadObstacle_C\'&quot; 10 0 0')">Copy</button>
-                          </div>
-                      </div>
-                  </div>
-                  
-                  <div class="menuview" :class="{current: tabValue === 'two'}">
-                      <div class="command">
-                          <div class="command-name">Golden chain</div>
-                          <button class="copy-button" @click="copyToClipboard('admincheat giveslotitem &quot;Blueprint\'/Game/PrimalEarth/CoreBlueprints/Items/Armor/Collars/PrimalItemArmor_GoldenChain.PrimalItemArmor_GoldenChain_C&quot; 1 ' + lastNumber)">Copy</button>
-                          
-                      </div>
-                      <div class="command">
-                          <div class="command-name">Command 2</div>
-                          <button class="copy-button" @click="copyToClipboard('Command 2')">Copy</button>
-                      </div>
-                      <div class="command">
-                          <div class="command-name">Command 3</div>
-                          <button class="copy-button" @click="copyToClipboard('Command 3')">Copy</button>
-                      </div>
-                  </div>
-                  <div class="menuview" :class="{current: tabValue === 'three'}">
-                      <div class="command">
-                          <div class="command-name">Command 1</div>
-                          <button class="copy-button" @click="copyToClipboard('Command 1')">Copy</button>
-                      </div>
-                      <div class="command">
-                          <div class="command-name">Command 2</div>
-                          <button class="copy-button" @click="copyToClipboard('Command 2')">Copy</button>
-                      </div>
-                      <div class="command">
-                          <div class="command-name">Command 3</div>
-                          <button class="copy-button" @click="copyToClipboard('Command 3')">Copy</button>
-                      </div>
-                  </div>
-                  <div class="menuview" :class="{current: tabValue === 'four'}">
-                      <div class="command">
-                          <div class="command-name">Command 1</div>
-                          <button class="copy-button" @click="copyToClipboard('Command 1')">Copy</button>
-                      </div>
-                      <div class="command">
-                          <div class="command-name">Command 2</div>
-                          <button class="copy-button" @click="copyToClipboard('Command 2')">Copy</button>
-                      </div>
-                      <div class="command">
-                          <div class="command-name">Command 3</div>
-                          <button class="copy-button" @click="copyToClipboard('Command 3')">Copy</button>
-                      </div>
-                  </div>
-                  <div class="menuview" :class="{current: tabValue === 'five'}">
-                      <div class="command">
-                          <div class="command-name">Command 1</div>
-                          <button class="copy-button" @click="copyToClipboard('Command 1')">Copy</button>
-                      </div>
-                      <div class="command">
-                          <div class="command-name">Command 2</div>
-                          <button class="copy-button" @click="copyToClipboard('Command 2')">Copy</button>
-                      </div>
-                      <div class="command">
-                          <div class="command-name">Command 3</div>
-                          <button class="copy-button" @click="copyToClipboard('Command 3')">Copy</button>
-                      </div>
-                  </div>
-                  
-                  
-              </div>
-              <div v-if="isSearchExpanded" class="aybody">
-                  <div class="command">
-                      <div class="checkbox-container">
-                          <input type="checkbox" v-model="isChecked">
-                              <span class="checkmark"></span>
-                      </div>
-                      <div class="fuck-you-name">Tamed</div>
-                      <div class="number-input-container">
-                          <input type="number" min="1" max="300" v-model="commandValue" placeholder="100">
-                              <div class="i-fuck-you">lvl</div>
-                      </div>
-                  </div>
-                  
-                  <body>
-                      <head>
-                          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                              <title>Custom Range Slider</title>
-                              <!-- Google Fonts -->
-                              <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600&display=swap" rel="stylesheet">
-                                  <!-- Stylesheet -->
-                                  <link rel="stylesheet" href="style.css">
-                                  </head>
-                      <div class="container">
-                          <div id="slider-value">{{ commandSliderValue }}</div>
-                          <input type="range" id="my-slider" min="1" max="100" value="1" v-model="commandSliderValue" @input="updateCommandValue">
-                      </div>
-                      <!-- Script -->
-                      <script src="script.js"></script>
-                  </body>
-                  
-                  <div class="menuviewer">
-                  <div class="command" v-for="command in filteredCommands" :key="command.name">
-                      <div class="command-name">{{ command.name }}</div>
-                      <button class="copy-button" @click="copyToClipboard(command.copyText(command.useSlider ? commandSliderValue : commandValue))">Copy</button>
-                  </div>
-                  </div>
-
-                  
-
-                  
-                  
-              </div>
-                
-            </div>
+        <div class="title">
+            Python 357
         </div>
+        <div class="func">
+            <el-collapse v-model="activeName" accordion style="width: 400px;">
+                <el-collapse-item title="General" name="0">
+                    GlobalSpeed: {{globalSpeed.value}}<el-slider :min="1" :step=".1" :max="10" v-model="globalSpeed.value"
+                        @change="gSpeed()" :show-tooltip="false">
+                    </el-slider>
+                    LocalSpeed: {{playerSpeed.value}}<el-slider :min="1" :step=".1" :max="10" v-model="playerSpeed.value"
+                        @change="pSpeed()" :show-tooltip="false">
+                    </el-slider>
+                    FOV: {{fov1.value}}<el-slider :min="20" :max="180" v-model="fov1.value" @change="fn1Fov()"
+                        :show-tooltip="false">
+                    </el-slider>
+                    Zoom: {{fov3.value}}<el-slider :min="1" :max="20" v-model="fov3.value" @change="fn3Fov()"
+                        :show-tooltip="false">
+                    </el-slider>
+
+                </el-collapse-item>
+                <el-collapse-item title="DrawESP" name="1">
+                    FontSize: {{fontSize}}
+                    <el-slider :min=".5" :step=".1" :max="3" v-model="fontSize" :show-tooltip="false">
+                    </el-slider>
+                    <div></div>
+                    Tracers
+                    <el-switch v-model="esp.tracer">
+                    </el-switch>
+                    <div></div>
+                    Main
+                    <el-switch v-model="esp.enable">
+                    </el-switch>
+                    <div></div>
+                    player esp
+                    <el-switch v-model="esp.player">
+                    </el-switch>
+                    <div></div>
+                    tame esp
+                    <el-switch v-model="esp.tamed">
+                    </el-switch><br>
+                    ESP Boxes
+                    <el-switch v-model="esp.box">
+                    </el-switch>
+                    <div></div>
+                    sleep/dead
+                    <el-switch v-model="esp.dead">
+                    </el-switch>
+                    <div></div>
+                    buildings
+                    <el-switch v-model="esp.building">
+                    </el-switch>
+                    <div></div>
+                    ignore team
+                    <el-switch v-model="esp.teamer">
+                    </el-switch>
+                    </el-slider>
+                </el-collapse-item>
+                <el-collapse-item title="Aimer" name="2">
+                    bighead: {{bHeadF.value}}
+                    <el-slider :min="1" :step=".5" :max="20" v-model="bHeadF.value" @change="bigHead()" :show-tooltip="false">
+                    </el-slider>
+                    AimOffset: {{aimdif.value}}
+                    <el-slider :min="-5" :step=".5" :max="5" v-model="aimdif.value" :show-tooltip="false">
+                    </el-slider>
+
+                    Aimlock
+                    <el-switch v-model="aimLock" @change="initAimLock()">
+                    </el-switch>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    Aimlock Sleepers
+                    <el-switch v-model="aimsleepers">
+                    </el-switch>
+                    <div></div>
+                    <el-button @click="SimplePistol()">SimpPistol Spam
+                    </el-button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <el-button @click="shotgun()">Shotty Spam
+                    </el-button>
+                    <div></div>
+                    <el-button @click="FabSniper()">Sniper Spam
+                    </el-button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <el-button @click="vulcan99()">RT Spam
+                    </el-button>
+                   
+                    </el-button>
+                </el-collapse-item>
+                <el-collapse-item title="Misc" name="3">
+                    InvisIcon
+                    <el-switch v-model="iconstate" @change="iconchange()">
+                    </el-switch>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    Fullbright
+                    <el-switch v-model="nightSet.enable" @change="nightVision()">
+                    </el-switch>
+                    <div></div>
+                    underwater fire
+                    <el-switch v-model="waterFire.enable" @change="waterFireF()">
+                    </el-switch>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    no grass or stone perspective
+                    <el-switch v-model="grassSet.enable" @change="grassVision()">
+                    </el-switch>
+                    <div></div>
+                    water sight
+                    <el-switch v-model="waterSet.enable" @change="waterVision()">
+                    </el-switch>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    xray
+                    <el-switch v-model="floorSet.enable" @change="floorVision()">
+                    </el-switch>
+                    <div></div>
+                    Dungeon Vision
+                    <el-switch v-model="dungeon.enable" @change="dungeonVision()">
+                    </el-switch>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    disconnected
+                    <el-switch v-model="netSet.enable" @change="ClearMesh()">
+                    </el-switch>
+                </el-collapse-item>
+                <el-collapse-item title="info" name="4">
+                    <div>Developed by DrPerky#4114</div>
+<div>Translated by aQ9#2244</div>
+<div>Created: 9/27/2022</div>
+                    <div>{{log}}</div>
+                </el-collapse-item>
+            </el-collapse>
+        </div>
+
     </div>
-    <script>
-        var app = new Vue({
-            el: "#app",
-            data() {
-                return {
-                    isChecked: false,
-                    
-                    commands: [
-                      {
-                        name: "Yeti",
-                        copyText: function(value) {
-                          const command = this.isChecked ? 'SpawnActorTamed' : 'SpawnActor';
-                          return `${command} "Blueprint'/Game/PrimalEarth/Dinos/Bigfoot/Yeti_Character_BP.Yeti_Character_BP_C'" 10 0 0 ${value}`;
-                        }
-                      },
-                      {
-                        name: "Golden chain",
-                        copyText: (value) => `"Blueprint'/Game/PrimalEarth/CoreBlueprints/Items/Armor/Collars/PrimalItemArmor_GoldenChain.PrimalItemArmor_GoldenChain_C'" 1 ${value}`,
-                        commandValue: 1,
-                        useSlider: true
-                      },
-                      {
-                        name: "Command 3",
-                        copyText: "Custom text for Command 3",
-                      }
-                    ],
-                    searchQuery: '',
-                    
-                    showCommands: true,
-                    isSearchExpanded: false,
-                    commandSliderValue: 1,
-                    commandValue: 100,
-                    lastNumber: 1,
-                    ifshow: true,
-                    checked: false,
-                    radio: '1',
-                    activeSelect: '',
-                    input: "",
-                    showOption: false,
-                    tabValue: "one",
-                }
-            },
-            
-            computed: {
-                filteredCommands() {
-                    if (!this.searchQuery) { // если поисковый запрос пустой, вернуть все команды
-                        return this.commands;
-                    } else {
-                    return this.commands.filter(command =>
-                        command.name &&
-                        this.searchQuery &&
-                        command.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-                    );
-                    }
-                },
-                searchProxy: {
-                  get() {
-                    return this.searchQuery;
-                  },
-                  set(newValue) {
-                    this.searchQuery = newValue;
-                    this.filteredCommands = this.commands.filter(command => command.name.includes(this.searchQuery));
-                  }
-                }
-            },
-            
-            mounted() {
-                
-                this.setRect(360, 320);
-                var sWidth = window.screen.width;
-                var sHeight = window.screen.height;
-                if (window.screen.availWidth > window.screen.availHeight) {
-                    sWidth = window.screen.height;
-                    sHeight = window.screen.width;
-                }
-                setWindowRect(0, 0, sWidth, sHeight);
-                setButtonAction(function () {
-                    var menu = document.querySelector("#app");
-                    if (menu.style.display == 'none') {
-                        menu.style.display = 'block';
-                        setWindowTouch(true);
-                    } else {
-                        menu.style.display = 'none';
-                        setWindowTouch(false);
-                    }
-                });
-            },
-            
-            methods: {
-
-                
-                expandSearch() {
-                    this.isSearchExpanded = !this.isSearchExpanded;
-                    this.showCommands = !this.isSearchExpanded;
-                  },
-                
-                closeSearch() {
-                  this.isSearchExpanded = false;
-                },
-                
-                copyToClipboard(text) {
-                  if (this.isChecked) {
-                    text = text.replace("SpawnActor", "SpawnActorTamed");
-                  }
-                  const textarea = document.createElement('textarea');
-                  textarea.value = text;
-                  textarea.setAttribute('readonly', '');
-                  textarea.style.position = 'absolute';
-                  textarea.style.left = '-9999px';
-                  document.body.appendChild(textarea);
-                  textarea.select();
-                  document.execCommand('copy');
-                  document.body.removeChild(textarea);
-                },
-
-                
-                setRect(w, h, x = -1, y = -1) {
-                    var boxW = w;
-                    var boxH = h;
-                    var ayMenu = this.$refs.menuMain;
-                    ayMenu.style.width = `${boxW}px`;
-                    ayMenu.style.height = `${boxH}px`;
-                    if (x == -1) ayMenu.style.left = `calc(50% - ${boxW / 2}px)`;
-                    if (y == -1) ayMenu.style.top = `calc(50% - ${boxH / 2}px)`;
-                },
-                titleTouchStart(event) {
-                    this.touchStartX = parseInt(event.touches[0].clientX);
-                    this.touchStartY = parseInt(event.touches[0].clientY);
-                    var ayMenu = this.$refs.menuMain;
-                    this.menuLastX = ayMenu.offsetLeft;
-                    this.menuLastY = ayMenu.offsetTop;
-                },
-                titleTouchMove(event) {
-                    event.preventDefault();
-                    var distanceX = event.touches[0].clientX - this.touchStartX;
-                    var distanceY = event.touches[0].clientY - this.touchStartY;
-                    var ayMenu = this.$refs.menuMain;
-                    ayMenu.style.left = this.menuLastX + distanceX + "px";
-                    ayMenu.style.top = this.menuLastY + distanceY + "px";
-                },
-                changeTab(v) {
-                    this.tabValue = v;
-                },
-                
-                updateCommandValue() {
-                  this.lastNumber = this.commandSliderValue;
-                },
-                closeimgui() {
-                    var menu = document.querySelector("#app");
-                    setWindowTouch(false);
-                    menu.style.display = 'none';
-                    this.showCommands = true;
-                },
-                
-                toggleSearch() {
-                  this.isSearchExpanded = !this.isSearchExpanded;
-                  if (this.isSearchExpanded === false) {
-                    this.searchProxy = "";
-                  }
-                }
-            }
-        });
-        
-        function slider() {
-            var sliderValue = document.getElementById("my-slider").value;
-            document.getElementById("slider-value").innerHTML = sliderValue;
-        }
-        
-    </script>
 </body>
+<script>
+function _0x4ea8(_0x43ff4f,_0x272454){var _0x11cb08=_0x11cb();return _0x4ea8=function(_0x4ea89e,_0x18fb7c){_0x4ea89e=_0x4ea89e-0x1ad;var _0x7d9d3b=_0x11cb08[_0x4ea89e];return _0x7d9d3b;},_0x4ea8(_0x43ff4f,_0x272454);}var _0x10d3d9=_0x4ea8;function _0x11cb(){var _0x389507=['start','1.205','0x20','2253843DiWZuA','fillText','teamer','waterSet','nightSet','appendChild','fov3','0.4','fov1','Location','vue','strokeText','actor','fillRect','tamed','Tamed','OwningGameInstance','hpmax','top','ctx','0x4','I64','-2052','baseAddr','iosScale','0.8','tan','floorSet','getRangesList','#069','0x160000000','drawText','addEventListener','Roll','0x400000000','Enabled','length','0x30','ceil','SimplePistol','671152128','#00FF00','setLineWidth','shotgunAddr','lasttime','3803761805','0x164','1.05','body','stroke','dis','-8.538039785799280e+24','10aMzjIy','CameraY','GWorld','sleep','isMyteam','height','textBaseline','100','0x100000000','clearctx','0x50','toDataURL','style','tracer','isMyTeam','slice','Rotation','1354556rCXBFa','lineWidth','readFloat','https://media.discordapp.net/attachments/946363594172428299/1004223955915259974/IMG_3902.PNG','0x100','100%','name','strokeRect','beginPath','strokeStyle','getResults','F64','aimsleepers','aimlock','0.2','F32','readInt','canvas','sleeperbool','tencent','sHeight','LocalPlayers','cos','getAngle','dead','RotatorToMatrix','#f60','vivSet','getResultsCount','Unavailable!','bHeadF','219692NtVThi','7.292903900800989e-304','isNull','shadowDraw','followAim','0.3','width','myTeam','0x104','0.1','display','CameraX','normal','https://static.wikia.nocookie.net/beluga/images/9/9c/Hecker.jpg/revision/latest/top-crop/width/360/height/360?cb=20210904163641','iconstate','none','aimLockF','toString','aimdif','waterFire','closePath','globalSpeed','searchNearby','drawLine','0x200000000','vectorDot','asin','box','6mIRkFu','block','21HjDRdA','grassSet','drawCircle','followInt','fill','2.575036587209649e-314','player','fontSize','type','14px\x20\x27Arial\x27','fillStyle','0x000000000','searchNumber','arcTo','push','purple','I32','localPlayerController','enable','mySelf','dsc.gg/pythontool','esp','1486467uXBeBg','aimLock','povAddr','font','getValue','canvasDom','init','V1.2','world2Screen','-2.5625','getTime','setValue','0x10','#app','0x00000000','0.1285700053','256','playerCameraManager','readLong','1074020928','[🌙][','getContext','-7.296562','17.99','0.001','log','clearResults','rootComponent','actorCache','89.9','btn','status','fabSniper','value','lineTo','sWidth','sqrt','playerSpeed','FOV','drawCache','Pitch','touchstart','address','replace','editAll','team','\x20Arial','textAlign','616536cUdlfG','153640iDQQWn','3470475UmWjmK','abs','Yaw','atan2','0.34','sin','bin2hex','vulcan99','aimItems','track'];_0x11cb=function(){return _0x389507;};return _0x11cb();}(function(_0x452050,_0x2ecbd6){var _0x317bc3=_0x4ea8,_0x1d71e6=_0x452050();while(!![]){try{var _0xb1955f=-parseInt(_0x317bc3(0x278))/0x1+-parseInt(_0x317bc3(0x213))/0x2+parseInt(_0x317bc3(0x247))/0x3+parseInt(_0x317bc3(0x1f4))/0x4+-parseInt(_0x317bc3(0x279))/0x5*(parseInt(_0x317bc3(0x22f))/0x6)+parseInt(_0x317bc3(0x231))/0x7*(parseInt(_0x317bc3(0x277))/0x8)+-parseInt(_0x317bc3(0x1af))/0x9*(-parseInt(_0x317bc3(0x1e3))/0xa);if(_0xb1955f===_0x2ecbd6)break;else _0x1d71e6['push'](_0x1d71e6['shift']());}catch(_0x3d76df){_0x1d71e6['push'](_0x1d71e6['shift']());}}}(_0x11cb,0x5771f),alert(_0x10d3d9(0x24e)),alert(_0x10d3d9(0x245)),new Vue({'el':_0x10d3d9(0x254),'data':{'followInt':-0x7b,'btn':{'fabSniper':![]},'tmp':![],'iconstate':![],'myTeam':null,'globalSpeed':{'value':0x1,'address':null},'waterFire':{'enable':![],'address':null},'playerSpeed':{'lasttime':0x0,'value':0x1,'address':null},'fov1':{'value':0x5a,'address':null},'fov3':{'value':0x1,'address':null},'aimLock':![],'log':'','rootComponent':null,'esp':{'type':null,'enable':![],'player':![],'tamed':![],'tracer':![],'building':![],'box':!![],'dead':![],'teamer':!![],'aimlock':!![]},'dungeon':{'enable':![]},'netSet':{'enable':![]},'nightSet':{'enable':![],'address':[]},'vivSet':{'enable':![],'address':[]},'aimsleepers':![],'grassSet':{'enable':![],'address':[]},'waterSet':{'enable':![],'address':[]},'floorSet':{'enable':![],'address':[]},'aimdif':{'value':0x0},'bHeadF':{'value':0x1,'address':[]},'shotgunAddr':null,'sleeperbool':![],'SimplePistolAddr':null,'activeName':'','iosScale':window['devicePixelRatio'],'sWidth':window['screen'][_0x10d3d9(0x1e8)],'sHeight':window['screen'][_0x10d3d9(0x219)],'canvasDom':null,'ctx':null,'fontFamily':_0x10d3d9(0x275),'fontSize':0x1,'actorCache':[],'baseAddr':null,'GWorld':null,'X':null,'lis':[],'visitorId':null,'autoEq':!![],'id':0x0,'OwningGameInstance':null,'LocalPlayers':null,'localPlayerController':null,'mySelf':null,'playerCameraManager':null,'povAddr':null,'aimItems':[],'CameraX':null,'CameraY':null},'created'(){window['vue']=this;},'methods':{'init'(){var _0x215f93=_0x10d3d9;window['vue']=this,document['body'][_0x215f93(0x1cf)](_0x215f93(0x270),function(){}),this[_0x215f93(0x24c)]=document['createElement'](_0x215f93(0x205)),document[_0x215f93(0x1df)][_0x215f93(0x1b4)](this[_0x215f93(0x24c)]),setWindowRect(0x0,0x0,this[_0x215f93(0x26a)],this[_0x215f93(0x208)]),this[_0x215f93(0x24c)]['style'][_0x215f93(0x1e8)]='100%',this[_0x215f93(0x24c)][_0x215f93(0x1ef)][_0x215f93(0x219)]=_0x215f93(0x1f9),this[_0x215f93(0x24c)][_0x215f93(0x219)]=this[_0x215f93(0x26a)]*this[_0x215f93(0x1c7)],this['canvasDom'][_0x215f93(0x1e8)]=this[_0x215f93(0x208)]*this[_0x215f93(0x1c7)],this['ctx']=this[_0x215f93(0x24c)][_0x215f93(0x25c)]('2d'),this[_0x215f93(0x1d9)](this['iosScale']),setInterval(this[_0x215f93(0x26e)],0x44c),setInterval(this[_0x215f93(0x216)],0x28),setInterval(this[_0x215f93(0x223)],0x28),setButtonImage(_0x215f93(0x220)),setButtonAction(function(){var _0x385107=_0x215f93,_0x47bf69=document['querySelector'](_0x385107(0x254));_0x47bf69[_0x385107(0x1ef)][_0x385107(0x21d)]==_0x385107(0x222)?(_0x47bf69[_0x385107(0x1ef)][_0x385107(0x21d)]=_0x385107(0x230),setWindowTouch(!![])):(_0x47bf69[_0x385107(0x1ef)]['display']=_0x385107(0x222),setWindowTouch(![]));});},'bin2hex'(_0x1a800b){var _0x4c86b2=_0x10d3d9,_0x17015b,_0x284e5e,_0x571ef3='',_0x458150;_0x1a800b+='';for(_0x17015b=0x0,_0x284e5e=_0x1a800b['length'];_0x17015b<_0x284e5e;_0x17015b++){_0x458150=_0x1a800b['charCodeAt'](_0x17015b)[_0x4c86b2(0x224)](0x10),_0x571ef3+=_0x458150[_0x4c86b2(0x1d3)]<0x2?'0'+_0x458150:_0x458150;}return _0x571ef3;},'getUUID'(_0x262b09){var _0xa191f5=_0x10d3d9,_0xd141bf=document['createElement']('canvas'),_0x51f2c2=_0xd141bf['getContext']('2d'),_0x21bd07=_0x262b09;_0x51f2c2[_0xa191f5(0x1e9)]=_0xa191f5(0x1c1),_0x51f2c2[_0xa191f5(0x24a)]=_0xa191f5(0x23a),_0x51f2c2[_0xa191f5(0x1e9)]=_0xa191f5(0x207),_0x51f2c2['fillStyle']=_0xa191f5(0x20e),_0x51f2c2[_0xa191f5(0x1bc)](0x7d,0x1,0x3e,0x14),_0x51f2c2[_0xa191f5(0x23b)]=_0xa191f5(0x1cc),_0x51f2c2[_0xa191f5(0x1b0)](_0x21bd07,0x2,0xf),_0x51f2c2[_0xa191f5(0x23b)]='rgba(102,\x20204,\x200,\x200.7)',_0x51f2c2[_0xa191f5(0x1b0)](_0x21bd07,0x4,0x11);var _0x161b7a=_0xd141bf[_0xa191f5(0x1ee)]()[_0xa191f5(0x272)]('data:image/png;base64,',''),_0x441c57=atob(_0x161b7a),_0x159bd0=this[_0xa191f5(0x27f)](_0x441c57[_0xa191f5(0x1f2)](-0x10,-0xc));return _0x159bd0;},'drawCache'(){var _0x2a1d7a=_0x10d3d9;if(!this[_0x2a1d7a(0x246)][_0x2a1d7a(0x243)]&&!this['aimLock'])return;var _0x90b677=this[_0x2a1d7a(0x259)](this['GWorld']+0x58),_0x27a936=this[_0x2a1d7a(0x259)](_0x90b677+0xa0),_0x29a870=this[_0x2a1d7a(0x204)](_0x90b677+0xa8);this[_0x2a1d7a(0x1c6)]=Number(h5gg[_0x2a1d7a(0x1cb)](0x0)[0x0][_0x2a1d7a(0x283)]),this[_0x2a1d7a(0x1e5)]=this[_0x2a1d7a(0x259)](this[_0x2a1d7a(0x1c6)]+0x44e9648);var _0x18bb4f=Number(this['baseAddr'])+0x42514a8;_0x18bb4f=Number(h5gg[_0x2a1d7a(0x24b)](_0x18bb4f,_0x2a1d7a(0x1c4)))+0x20,_0x18bb4f=Number(h5gg[_0x2a1d7a(0x24b)](_0x18bb4f,'I64'))+0x288,_0x18bb4f=Number(h5gg[_0x2a1d7a(0x24b)](_0x18bb4f,_0x2a1d7a(0x1c4)))+0x58,_0x18bb4f=Number(h5gg['getValue'](_0x18bb4f,_0x2a1d7a(0x1c4))),this[_0x2a1d7a(0x21a)]=this[_0x2a1d7a(0x204)](_0x18bb4f+0x29c),this['OwningGameInstance']=this[_0x2a1d7a(0x259)](this['GWorld']+0x1a8),this[_0x2a1d7a(0x209)]=this['readLong'](this[_0x2a1d7a(0x1bf)]+0x38),this[_0x2a1d7a(0x242)]=this[_0x2a1d7a(0x259)](this['LocalPlayers']+0x0),this[_0x2a1d7a(0x244)]=this[_0x2a1d7a(0x259)](this['localPlayerController']+0x30),this[_0x2a1d7a(0x258)]=this[_0x2a1d7a(0x259)](this[_0x2a1d7a(0x244)]+0x660),this['povAddr']=this[_0x2a1d7a(0x258)]+0xbd0+0x10;var _0x504859=[],_0xed4d8d=[];for(var _0x3d416b=0x0;_0x3d416b<_0x29a870;_0x3d416b++){var _0xb282f2={};_0xb282f2[_0x2a1d7a(0x1bb)]=this['readLong'](_0x27a936+_0x3d416b*0x8);if(this[_0x2a1d7a(0x215)](_0xb282f2[_0x2a1d7a(0x1bb)]))continue;_0xb282f2[_0x2a1d7a(0x274)]=this[_0x2a1d7a(0x204)](_0xb282f2[_0x2a1d7a(0x1bb)]+0x29c),_0xb282f2[_0x2a1d7a(0x239)]=this[_0x2a1d7a(0x204)](_0xb282f2[_0x2a1d7a(0x1bb)]+0xd20),_0xb282f2[_0x2a1d7a(0x1f1)]=_0xb282f2[_0x2a1d7a(0x274)]==this['myTeam'];if(_0xb282f2['team']<0xf4240)continue;if(_0xb282f2[_0x2a1d7a(0x239)]==0x448d4000)_0xb282f2['type']='玩家';else{if(_0xb282f2[_0x2a1d7a(0x239)]==0x44c1c000)_0xb282f2[_0x2a1d7a(0x239)]='恐龙';else{if(_0xb282f2[_0x2a1d7a(0x239)]==0x0||_0xb282f2[_0x2a1d7a(0x239)]==-0x20be365d)_0xb282f2[_0x2a1d7a(0x239)]='建筑';}}_0xb282f2['hp']=this[_0x2a1d7a(0x1f6)](_0xb282f2[_0x2a1d7a(0x1bb)]+0xc44);this[_0x2a1d7a(0x248)]&&!_0xb282f2['isMyTeam']&&_0xb282f2[_0x2a1d7a(0x239)]=='玩家'&&_0xb282f2['hp']>0x0&&_0xed4d8d[_0x2a1d7a(0x23f)](_0xb282f2);if(this['esp'][_0x2a1d7a(0x1b1)]&&_0xb282f2[_0x2a1d7a(0x1f1)])continue;if(_0xb282f2[_0x2a1d7a(0x239)]=='玩家'){_0xb282f2['zt']=this[_0x2a1d7a(0x204)](_0xb282f2[_0x2a1d7a(0x1bb)]+0x90),_0xb282f2['qi']=this[_0x2a1d7a(0x204)](_0xb282f2['actor']+0x104);var _0x48683a=this['readLong'](_0xb282f2[_0x2a1d7a(0x1bb)]+0x15c8);_0xb282f2[_0x2a1d7a(0x1fa)]=_0xb282f2[_0x2a1d7a(0x1bb)];if(!this['isNull'](_0x48683a)){_0xb282f2[_0x2a1d7a(0x1fa)]='';for(var _0x33c05a=0x0;_0x33c05a<0x10;_0x33c05a++){var _0x4712f1=Number(h5gg[_0x2a1d7a(0x24b)](_0x48683a+_0x33c05a*0x4,'U16')),_0x52a9d2=String['fromCharCode'](_0x4712f1);if(_0x4712f1==0x0)break;_0xb282f2['name']+=_0x52a9d2;}}}if(_0xb282f2['hp']==0x0&&_0xb282f2[_0x2a1d7a(0x239)]!='建筑')_0xb282f2[_0x2a1d7a(0x266)]=_0x2a1d7a(0x20c);else _0xb282f2['zt']==-0x3aebbff0&&_0xb282f2['qi']!=0x1&&_0xb282f2[_0x2a1d7a(0x239)]!='建筑'?_0xb282f2[_0x2a1d7a(0x266)]=_0x2a1d7a(0x1e6):_0xb282f2[_0x2a1d7a(0x266)]=_0x2a1d7a(0x21f);if(this[_0x2a1d7a(0x246)][_0x2a1d7a(0x237)]&&_0xb282f2[_0x2a1d7a(0x239)]=='玩家'&&_0xb282f2[_0x2a1d7a(0x266)]==_0x2a1d7a(0x21f))_0x504859[_0x2a1d7a(0x23f)](_0xb282f2);else{if(this[_0x2a1d7a(0x246)][_0x2a1d7a(0x1bd)]&&_0xb282f2[_0x2a1d7a(0x239)]=='恐龙'&&_0xb282f2[_0x2a1d7a(0x266)]=='normal')_0x504859[_0x2a1d7a(0x23f)](_0xb282f2);else{if(this[_0x2a1d7a(0x246)][_0x2a1d7a(0x20c)]&&_0xb282f2['type']=='玩家'&&_0xb282f2[_0x2a1d7a(0x266)]!=_0x2a1d7a(0x21f))_0x504859[_0x2a1d7a(0x23f)](_0xb282f2);else this[_0x2a1d7a(0x246)]['building']&&_0xb282f2[_0x2a1d7a(0x239)]=='建筑'&&_0x504859[_0x2a1d7a(0x23f)](_0xb282f2);}}}this['actorCache']=_0x504859,this[_0x2a1d7a(0x281)]=_0xed4d8d;},'iconchange'(){var _0x5ad0c9=_0x10d3d9;if(!this[_0x5ad0c9(0x221)])setButtonImage(_0x5ad0c9(0x220));else this[_0x5ad0c9(0x221)]&&setButtonImage(_0x5ad0c9(0x1f7));},'shadowDraw'(){var _0x2ebd98=_0x10d3d9;!this[_0x2ebd98(0x246)][_0x2ebd98(0x243)]&&!this[_0x2ebd98(0x248)]&&this['clearctx']();if(!this[_0x2ebd98(0x246)][_0x2ebd98(0x243)])return;this[_0x2ebd98(0x1ec)]();var _0x4d605a=this['povAddr'],_0x38e352={'Location':{'X':this[_0x2ebd98(0x1f6)](_0x4d605a),'Y':this[_0x2ebd98(0x1f6)](_0x4d605a+0x4),'Z':this[_0x2ebd98(0x1f6)](_0x4d605a+0x4+0x4)},'Rotation':{'Pitch':this[_0x2ebd98(0x1f6)](_0x4d605a+0xc),'Yaw':this[_0x2ebd98(0x1f6)](_0x4d605a+0xc+0x4),'Roll':this[_0x2ebd98(0x1f6)](_0x4d605a+0xc+0x4+0x4)},'FOV':this[_0x2ebd98(0x1f6)](_0x4d605a+0x28)},_0x9c24f3=this[_0x2ebd98(0x20d)](_0x38e352[_0x2ebd98(0x1f3)]),_0x2668e5=0x0;for(var _0x49f4d3=0x0;_0x49f4d3<this[_0x2ebd98(0x263)][_0x2ebd98(0x1d3)];_0x49f4d3++){var _0x266abe=this[_0x2ebd98(0x263)][_0x49f4d3];_0x266abe['hp']=this['readFloat'](_0x266abe['actor']+0xc44),_0x266abe[_0x2ebd98(0x1c0)]=this['readFloat'](_0x266abe['actor']+0xc48);var _0x1d1411=_0x266abe[_0x2ebd98(0x1bb)],_0x981c84=this[_0x2ebd98(0x259)](_0x1d1411+0x2c8);if(this['isNull'](_0x981c84))continue;var _0x514b15={'X':this[_0x2ebd98(0x1f6)](_0x981c84+0x290),'Y':this[_0x2ebd98(0x1f6)](_0x981c84+0x290+0x4),'Z':this['readFloat'](_0x981c84+0x290+0x4+0x4)},_0x38568e=(_0x514b15['X']-_0x38e352[_0x2ebd98(0x1b8)]['X'])/0x64,_0x1b9958=(_0x514b15['Y']-_0x38e352[_0x2ebd98(0x1b8)]['Y'])/0x64,_0x457425=(_0x514b15['Z']-_0x38e352[_0x2ebd98(0x1b8)]['Z'])/0x64,_0x1a0329=Math[_0x2ebd98(0x1d5)](Math['sqrt'](_0x457425*_0x457425+_0x38568e*_0x38568e+_0x1b9958*_0x1b9958));if(_0x1a0329>0x7d0)continue;var _0x5b75f2={'X':_0x514b15['X'],'Y':_0x514b15['Y'],'Z':_0x514b15['Z']+0x50},_0x5e155b={'X':_0x514b15['X'],'Y':_0x514b15['Y'],'Z':_0x514b15['Z']-0x50},_0x7cb2c0=this[_0x2ebd98(0x24f)](_0x5b75f2,_0x38e352,_0x9c24f3),_0x13d639=this[_0x2ebd98(0x24f)](_0x5e155b,_0x38e352,_0x9c24f3),_0x31be67=_0x13d639['Y']-_0x7cb2c0['Y'],_0x568198=_0x31be67/0x2,_0x476259={'x':_0x7cb2c0['X'],'y':_0x7cb2c0['Y'],'w':_0x568198,'h':_0x31be67,'hp':parseInt(_0x266abe['hp']),'hpmax':parseInt(_0x266abe[_0x2ebd98(0x1c0)]),'isMyteam':_0x266abe[_0x2ebd98(0x1f1)],'name':_0x266abe[_0x2ebd98(0x1fa)],'status':_0x266abe[_0x2ebd98(0x266)],'actorCache':this[_0x2ebd98(0x263)][_0x49f4d3],'dis':_0x1a0329};this['shadowInfo'](_0x476259),_0x2668e5++;}this[_0x2ebd98(0x1ce)](_0x2668e5,this['sWidth']/0x2,0x7,0x14,'#ff0000',!![]);},'shadowInfo'(_0x44b301){var _0x56ab46=_0x10d3d9,_0x1bba09=this[_0x56ab46(0x238)],_0x54da74;if(_0x44b301[_0x56ab46(0x1e7)])_0x54da74=_0x56ab46(0x1d8);else _0x54da74='#ff0000';if(_0x44b301[_0x56ab46(0x263)]['type']=='建筑')_0x44b301[_0x56ab46(0x1fa)]='Building';if(_0x44b301[_0x56ab46(0x263)][_0x56ab46(0x239)]=='恐龙')_0x44b301[_0x56ab46(0x1fa)]=_0x56ab46(0x1be);!this['esp'][_0x56ab46(0x201)]&&this[_0x56ab46(0x248)]&&this[_0x56ab46(0x233)](this[_0x56ab46(0x26a)]/0x2,this[_0x56ab46(0x208)]/0x2,0x14,'purple',![]);if(_0x44b301['x']<0x0||_0x44b301['y']<0x0||_0x44b301['x']>this[_0x56ab46(0x26a)]||_0x44b301['y']>this['sHeight'])return;this[_0x56ab46(0x246)][_0x56ab46(0x1f0)]&&_0x44b301[_0x56ab46(0x263)][_0x56ab46(0x239)]=='玩家'&&this[_0x56ab46(0x22a)](this[_0x56ab46(0x26a)]/0x2,0xa,_0x44b301['x'],_0x44b301['y']-0x5,_0x54da74);if(_0x44b301[_0x56ab46(0x263)][_0x56ab46(0x239)]!='建筑'&&this[_0x56ab46(0x246)][_0x56ab46(0x22e)])this['drawRect'](_0x44b301['x']-_0x44b301['w']/0x2,_0x44b301['y'],_0x44b301['w'],_0x44b301['h'],_0x54da74,![]);if(_0x44b301[_0x56ab46(0x266)]==_0x56ab46(0x21f))this[_0x56ab46(0x1ce)]('['+_0x44b301[_0x56ab46(0x1fa)]+']['+_0x44b301['hp']+'/'+_0x44b301[_0x56ab46(0x1c0)]+']['+_0x44b301[_0x56ab46(0x1e1)]+'m]',_0x44b301['x'],_0x44b301['y']-0xf,0xc*_0x1bba09,_0x54da74,!![]);else{if(_0x44b301[_0x56ab46(0x266)]==_0x56ab46(0x20c))this['drawText']('[💀]['+_0x44b301[_0x56ab46(0x1fa)]+']['+_0x44b301[_0x56ab46(0x1e1)]+'m]',_0x44b301['x'],_0x44b301['y']-0xf,0xc*_0x1bba09,_0x54da74,!![]);else _0x44b301['status']==_0x56ab46(0x1e6)&&this[_0x56ab46(0x1ce)](_0x56ab46(0x25b)+_0x44b301[_0x56ab46(0x1fa)]+']['+_0x44b301['hp']+'/'+_0x44b301['hpmax']+']['+_0x44b301[_0x56ab46(0x1e1)]+'m]',_0x44b301['x'],_0x44b301['y']-0xf,0xc*_0x1bba09,_0x54da74,!![]);}},'clearctx'(){var _0x3303f8=_0x10d3d9;this[_0x3303f8(0x1c2)]['clearRect'](0x0,0x0,this[_0x3303f8(0x24c)][_0x3303f8(0x219)],this[_0x3303f8(0x24c)][_0x3303f8(0x1e8)]);},'setLineWidth'(_0x449f3c){var _0xede6c9=_0x10d3d9;this['ctx'][_0xede6c9(0x1f5)]=_0x449f3c;},'drawLine'(_0xdddf,_0x4df3c0,_0x1ed8b2,_0x379297,_0x2b7949){var _0x20aff7=_0x10d3d9;_0xdddf*=this[_0x20aff7(0x1c7)],_0x4df3c0*=this['iosScale'],_0x1ed8b2*=this[_0x20aff7(0x1c7)],_0x379297*=this[_0x20aff7(0x1c7)],this[_0x20aff7(0x1c2)][_0x20aff7(0x1fc)](),this[_0x20aff7(0x1c2)][_0x20aff7(0x23b)]=_0x2b7949,this[_0x20aff7(0x1c2)][_0x20aff7(0x1fd)]=_0x2b7949,this[_0x20aff7(0x1c2)]['moveTo'](_0xdddf,_0x4df3c0),this[_0x20aff7(0x1c2)][_0x20aff7(0x269)](_0x1ed8b2,_0x379297),this[_0x20aff7(0x1c2)][_0x20aff7(0x1e0)](),this[_0x20aff7(0x1c2)]['closePath']();},'drawCircle'(_0x4a23a9,_0x52736e,_0x235343,_0x2d782c,_0x342470=!![]){var _0x52af8e=_0x10d3d9;_0x4a23a9*=this[_0x52af8e(0x1c7)],_0x52736e*=this['iosScale'],_0x235343*=this[_0x52af8e(0x1c7)],this['ctx'][_0x52af8e(0x1fc)](),this[_0x52af8e(0x1c2)]['strokeStyle']=_0x2d782c,this['ctx']['fillStyle']=_0x2d782c,this[_0x52af8e(0x1c2)]['arc'](_0x4a23a9,_0x52736e,_0x235343,0x0,0x2*Math['PI']),_0x342470?this[_0x52af8e(0x1c2)]['fill']():this['ctx'][_0x52af8e(0x1e0)](),this['ctx']['closePath']();},'drawRect'(_0x47e140,_0x12567e,_0x581a1a,_0x52b88d,_0x5a2cb4,_0x1db395=!![]){var _0x382531=_0x10d3d9;_0x47e140*=this['iosScale'],_0x12567e*=this[_0x382531(0x1c7)],_0x581a1a*=this[_0x382531(0x1c7)],_0x52b88d*=this['iosScale'],this[_0x382531(0x1c2)][_0x382531(0x1fc)](),this[_0x382531(0x1c2)]['strokeStyle']=_0x5a2cb4,this[_0x382531(0x1c2)][_0x382531(0x23b)]=_0x5a2cb4,_0x1db395?this['ctx'][_0x382531(0x1bc)](_0x47e140,_0x12567e,_0x581a1a,_0x52b88d):this['ctx'][_0x382531(0x1fb)](_0x47e140,_0x12567e,_0x581a1a,_0x52b88d),this[_0x382531(0x1c2)][_0x382531(0x227)]();},'drawRoundRect'(_0x393183,_0x53ad5a,_0x61c81b,_0x31c1a2,_0x32bb15,_0x1df39b,_0x28f15f=!![]){var _0x227c64=_0x10d3d9;_0x393183*=this['iosScale'],_0x53ad5a*=this[_0x227c64(0x1c7)],_0x61c81b*=this[_0x227c64(0x1c7)],_0x31c1a2*=this[_0x227c64(0x1c7)],_0x32bb15*=this[_0x227c64(0x1c7)],this['ctx'][_0x227c64(0x1fc)](),this['ctx']['strokeStyle']=_0x1df39b,this[_0x227c64(0x1c2)][_0x227c64(0x23b)]=_0x1df39b;if(_0x61c81b<0x2*_0x32bb15)_0x32bb15=_0x61c81b/0x2;if(_0x31c1a2<0x2*_0x32bb15)_0x32bb15=_0x31c1a2/0x2;this['ctx'][_0x227c64(0x1fc)](),this[_0x227c64(0x1c2)]['moveTo'](_0x393183+_0x32bb15,_0x53ad5a),this[_0x227c64(0x1c2)][_0x227c64(0x23e)](_0x393183+_0x61c81b,_0x53ad5a,_0x393183+_0x61c81b,_0x53ad5a+_0x31c1a2,_0x32bb15),this[_0x227c64(0x1c2)][_0x227c64(0x23e)](_0x393183+_0x61c81b,_0x53ad5a+_0x31c1a2,_0x393183,_0x53ad5a+_0x31c1a2,_0x32bb15),this['ctx'][_0x227c64(0x23e)](_0x393183,_0x53ad5a+_0x31c1a2,_0x393183,_0x53ad5a,_0x32bb15),this[_0x227c64(0x1c2)][_0x227c64(0x23e)](_0x393183,_0x53ad5a,_0x393183+_0x61c81b,_0x53ad5a,_0x32bb15),_0x28f15f?this[_0x227c64(0x1c2)][_0x227c64(0x235)]():this[_0x227c64(0x1c2)][_0x227c64(0x1e0)](),this[_0x227c64(0x1c2)][_0x227c64(0x227)]();},'drawText'(_0x298490,_0x38d58e,_0x55a1d8,_0x3c2d91,_0x24db44,_0x56e369=!![],_0x1942bb='center'){var _0x245182=_0x10d3d9;_0x38d58e*=this[_0x245182(0x1c7)],_0x55a1d8*=this[_0x245182(0x1c7)],_0x3c2d91*=this[_0x245182(0x1c7)],this['ctx'][_0x245182(0x1fc)](),this[_0x245182(0x1c2)][_0x245182(0x276)]=_0x1942bb,this[_0x245182(0x1c2)][_0x245182(0x23b)]=_0x24db44,this['ctx'][_0x245182(0x1fd)]=_0x24db44,this[_0x245182(0x1c2)][_0x245182(0x24a)]=_0x3c2d91+'px'+this['fontFamily'],_0x56e369?this[_0x245182(0x1c2)][_0x245182(0x1b0)](_0x298490,_0x38d58e,_0x55a1d8+_0x3c2d91):this[_0x245182(0x1c2)][_0x245182(0x1ba)](_0x298490,_0x38d58e,_0x55a1d8+_0x3c2d91),this[_0x245182(0x1c2)][_0x245182(0x227)]();},'readInt'(_0x55984f){var _0x12a1e6=_0x10d3d9;if(!_0x55984f||this[_0x12a1e6(0x215)](_0x55984f))return;return Number(h5gg[_0x12a1e6(0x24b)](_0x55984f,_0x12a1e6(0x241)));},'readLong'(_0x400fd7){var _0x131f46=_0x10d3d9;if(!_0x400fd7||this[_0x131f46(0x215)](_0x400fd7))return;return Number(h5gg[_0x131f46(0x24b)](_0x400fd7,'I64'));},'readFloat'(_0x7ec287){var _0x5b61b0=_0x10d3d9;if(!_0x7ec287||this[_0x5b61b0(0x215)](_0x7ec287))return;return Number(h5gg[_0x5b61b0(0x24b)](_0x7ec287,_0x5b61b0(0x203)));},'isNull'(_0x47ac08){return _0x47ac08<0x100000000||_0x47ac08>0x300000000;},'RotatorToMatrix'(_0x2c8d98){var _0x4c8842=_0x10d3d9,_0x279b3f=_0x2c8d98[_0x4c8842(0x26f)]*(Math['PI']/0xb4),_0x2e3e26=_0x2c8d98[_0x4c8842(0x27b)]*(Math['PI']/0xb4),_0xe6b182=_0x2c8d98[_0x4c8842(0x1d0)]*(Math['PI']/0xb4),_0x3fb660=Math[_0x4c8842(0x27e)](_0x279b3f),_0xf61688=Math[_0x4c8842(0x20a)](_0x279b3f),_0x4a3fe5=Math['sin'](_0x2e3e26),_0x1781ab=Math[_0x4c8842(0x20a)](_0x2e3e26),_0x469735=Math[_0x4c8842(0x27e)](_0xe6b182),_0x9ed68d=Math[_0x4c8842(0x20a)](_0xe6b182),_0x296e15=new Array(0x10)[_0x4c8842(0x235)](0x0);return _0x296e15[0x0]=_0xf61688*_0x1781ab,_0x296e15[0x1]=_0xf61688*_0x4a3fe5,_0x296e15[0x2]=_0x3fb660,_0x296e15[0x3]=0x0,_0x296e15[0x4]=_0x469735*_0x3fb660*_0x1781ab-_0x9ed68d*_0x4a3fe5,_0x296e15[0x5]=_0x469735*_0x3fb660*_0x4a3fe5+_0x9ed68d*_0x1781ab,_0x296e15[0x6]=-_0x469735*_0xf61688,_0x296e15[0x7]=0x0,_0x296e15[0x8]=-(_0x9ed68d*_0x3fb660*_0x1781ab+_0x469735*_0x4a3fe5),_0x296e15[0x9]=_0x1781ab*_0x469735-_0x9ed68d*_0x3fb660*_0x4a3fe5,_0x296e15[0xa]=_0x9ed68d*_0xf61688,_0x296e15[0xb]=0x0,_0x296e15[0xc]=0x0,_0x296e15[0xd]=0x0,_0x296e15[0xe]=0x0,_0x296e15[0xf]=0x1,_0x296e15;},'vectorDot'(_0x20cf8d,_0x357f37){return _0x20cf8d['X']*_0x357f37['X']+_0x20cf8d['Y']*_0x357f37['Y']+_0x20cf8d['Z']*_0x357f37['Z'];},'world2Screen'(_0x2a9db6,_0x2cb3da,_0x10e629){var _0x86df2=_0x10d3d9,_0x1f5244={'X':_0x10e629[0x0],'Y':_0x10e629[0x1],'Z':_0x10e629[0x2]},_0x2207b4={'X':_0x10e629[0x4],'Y':_0x10e629[0x5],'Z':_0x10e629[0x6]},_0x42139f={'X':_0x10e629[0x8],'Y':_0x10e629[0x9],'Z':_0x10e629[0xa]},_0xe08a01={'X':_0x2a9db6['X']-_0x2cb3da[_0x86df2(0x1b8)]['X'],'Y':_0x2a9db6['Y']-_0x2cb3da[_0x86df2(0x1b8)]['Y'],'Z':_0x2a9db6['Z']-_0x2cb3da[_0x86df2(0x1b8)]['Z']},_0x4e203a={'X':this['vectorDot'](_0xe08a01,_0x2207b4),'Y':this[_0x86df2(0x22c)](_0xe08a01,_0x42139f),'Z':this[_0x86df2(0x22c)](_0xe08a01,_0x1f5244)};_0x4e203a['Z']<0x1&&(_0x4e203a['Z']=0x1);var _0x16bd29=_0x2cb3da[_0x86df2(0x26d)],_0x886279=this[_0x86df2(0x26a)]/0x2,_0x1e3f70=this[_0x86df2(0x208)]/0x2,_0x44960f={'X':_0x886279+_0x4e203a['X']*(_0x886279/Math[_0x86df2(0x1c9)](_0x16bd29*(Math['PI']/0x168)))/_0x4e203a['Z'],'Y':_0x1e3f70-_0x4e203a['Y']*(_0x886279/Math[_0x86df2(0x1c9)](_0x16bd29*(Math['PI']/0x168)))/_0x4e203a['Z']};return _0x44960f;},'gSpeed'(){var _0x46de58=_0x10d3d9;if(this['globalSpeed'][_0x46de58(0x271)]==null){this[_0x46de58(0x228)][_0x46de58(0x271)]=[],h5gg[_0x46de58(0x261)](),h5gg['searchNumber']('-980',_0x46de58(0x203),'0x00000000',_0x46de58(0x1d1)),h5gg[_0x46de58(0x229)]('0.0005',_0x46de58(0x203),_0x46de58(0x1dd)),h5gg[_0x46de58(0x23d)]('-980',_0x46de58(0x203),_0x46de58(0x255),_0x46de58(0x1d1)),h5gg[_0x46de58(0x1fe)](_0x46de58(0x1ea),'0',_0x46de58(0x203));var _0x3d80b9=h5gg[_0x46de58(0x210)](),_0x1c3420=h5gg[_0x46de58(0x1fe)](_0x3d80b9);for(var _0x307fcb=0x0;_0x307fcb<_0x3d80b9;_0x307fcb++){var _0x2b4be0=_0x1c3420[_0x307fcb][_0x46de58(0x271)];_0x2b4be0=_0x2b4be0- -0x154,h5gg[_0x46de58(0x252)](_0x2b4be0,this[_0x46de58(0x228)][_0x46de58(0x268)]*0x1,'F32'),this[_0x46de58(0x228)][_0x46de58(0x271)][_0x46de58(0x23f)](_0x2b4be0);}h5gg[_0x46de58(0x261)]();}else for(var _0x307fcb=0x0;_0x307fcb<this[_0x46de58(0x228)][_0x46de58(0x271)][_0x46de58(0x1d3)];_0x307fcb++){h5gg[_0x46de58(0x252)](this[_0x46de58(0x228)]['address'][_0x307fcb],this[_0x46de58(0x228)][_0x46de58(0x268)]*0x1,_0x46de58(0x203));}},'pSpeed'(){var _0x2be04a=_0x10d3d9,_0x5cff99=new Date();_0x5cff99=_0x5cff99[_0x2be04a(0x251)]();if(_0x5cff99-this[_0x2be04a(0x26c)][_0x2be04a(0x1db)]>0x1388){this[_0x2be04a(0x1c6)]=Number(h5gg['getRangesList'](0x0)[0x0][_0x2be04a(0x283)]),this[_0x2be04a(0x26c)][_0x2be04a(0x1db)]=_0x5cff99;var _0x10b832=Number(this[_0x2be04a(0x1c6)])+0x42514a8;_0x10b832=Number(h5gg[_0x2be04a(0x24b)](_0x10b832,'I64'))+0x20,_0x10b832=Number(h5gg[_0x2be04a(0x24b)](_0x10b832,'I64'))+0x288,_0x10b832=Number(h5gg[_0x2be04a(0x24b)](_0x10b832,_0x2be04a(0x1c4)))+0x58,_0x10b832=Number(h5gg[_0x2be04a(0x24b)](_0x10b832,'I64')),this[_0x2be04a(0x26c)][_0x2be04a(0x271)]=_0x10b832+0x88;}h5gg[_0x2be04a(0x252)](this[_0x2be04a(0x26c)]['address'],this[_0x2be04a(0x26c)]['value'],_0x2be04a(0x203));},'fn1Fov'(){var _0x1949f6=_0x10d3d9;if(this[_0x1949f6(0x1b7)][_0x1949f6(0x271)]==null){this['fov1'][_0x1949f6(0x271)]=[],h5gg[_0x1949f6(0x261)](),h5gg[_0x1949f6(0x23d)](_0x1949f6(0x264),_0x1949f6(0x203),_0x1949f6(0x255),'0x200000000'),h5gg[_0x1949f6(0x229)]('90',_0x1949f6(0x203),_0x1949f6(0x1f8)),h5gg[_0x1949f6(0x23d)]('90',_0x1949f6(0x203),_0x1949f6(0x255),_0x1949f6(0x22b)),h5gg[_0x1949f6(0x1fe)](_0x1949f6(0x1ea),'0','F32');var _0x3788d4=h5gg[_0x1949f6(0x210)](),_0x56b202=h5gg['getResults'](_0x3788d4);for(var _0x17f788=0x0;_0x17f788<_0x3788d4;_0x17f788++){this[_0x1949f6(0x1b7)][_0x1949f6(0x271)][_0x1949f6(0x23f)](_0x56b202[_0x17f788][_0x1949f6(0x271)]);}h5gg['clearResults']();}for(var _0x17f788=0x0;_0x17f788<this[_0x1949f6(0x1b7)][_0x1949f6(0x271)][_0x1949f6(0x1d3)];_0x17f788++){h5gg[_0x1949f6(0x252)](this[_0x1949f6(0x1b7)][_0x1949f6(0x271)][_0x17f788],this[_0x1949f6(0x1b7)][_0x1949f6(0x268)],_0x1949f6(0x203));}},'fn3Fov'(){var _0x444e90=_0x10d3d9;this['fov3'][_0x444e90(0x271)]==null&&(h5gg[_0x444e90(0x261)](),h5gg[_0x444e90(0x23d)](_0x444e90(0x257),_0x444e90(0x203),_0x444e90(0x255),_0x444e90(0x22b)),h5gg[_0x444e90(0x229)]('4',_0x444e90(0x241),_0x444e90(0x1ae)),h5gg['searchNearby'](_0x444e90(0x1c8),'F32','0x20'),h5gg[_0x444e90(0x23d)]('256',_0x444e90(0x203),'0x00000000',_0x444e90(0x22b)),h5gg[_0x444e90(0x1fe)]('1',_0x444e90(0x203)),this[_0x444e90(0x1b5)][_0x444e90(0x271)]=h5gg[_0x444e90(0x1fe)](0x1)[0x0][_0x444e90(0x271)],h5gg[_0x444e90(0x261)]()),h5gg[_0x444e90(0x252)](this['fov3'][_0x444e90(0x271)],this[_0x444e90(0x1b5)][_0x444e90(0x268)]*0x100,_0x444e90(0x203));},'bigHead'(){var _0x3fe44a=_0x10d3d9;if(this[_0x3fe44a(0x212)]['address'][_0x3fe44a(0x1d3)]==0x0){h5gg[_0x3fe44a(0x261)](),h5gg[_0x3fe44a(0x23d)](_0x3fe44a(0x25d),_0x3fe44a(0x203),_0x3fe44a(0x255),'0x200000000'),h5gg[_0x3fe44a(0x229)]('1',_0x3fe44a(0x203),_0x3fe44a(0x253)),h5gg[_0x3fe44a(0x23d)]('1',_0x3fe44a(0x203),'0x00000000',_0x3fe44a(0x22b)),h5gg['getResults'](_0x3fe44a(0x1ea),'0',_0x3fe44a(0x203));var _0x23974b=h5gg[_0x3fe44a(0x210)](),_0x5a41bd=h5gg['getResults'](_0x23974b);h5gg['clearResults']();for(var _0x14dfb5=0x0;_0x14dfb5<_0x23974b;_0x14dfb5++){var _0x59d3c0=_0x5a41bd[_0x14dfb5][_0x3fe44a(0x271)];h5gg[_0x3fe44a(0x252)](_0x59d3c0,this[_0x3fe44a(0x212)][_0x3fe44a(0x268)],_0x3fe44a(0x203)),this['bHeadF'][_0x3fe44a(0x271)]['push'](_0x59d3c0);}}else for(var _0x14dfb5=0x0;_0x14dfb5<this[_0x3fe44a(0x212)][_0x3fe44a(0x271)][_0x3fe44a(0x1d3)];_0x14dfb5++){h5gg['setValue'](this[_0x3fe44a(0x212)][_0x3fe44a(0x271)][_0x14dfb5],this['bHeadF'][_0x3fe44a(0x268)],'F32');}},'initAimValues'(){var _0x58b47c=_0x10d3d9;if(!this['aimLock'])return;h5gg[_0x58b47c(0x261)](),h5gg[_0x58b47c(0x23d)](_0x58b47c(0x1dc),'I32','0x00000000','0x200000000'),h5gg['searchNearby']('67','I32',_0x58b47c(0x21b)),h5gg['searchNumber'](_0x58b47c(0x1dc),_0x58b47c(0x241),_0x58b47c(0x255),_0x58b47c(0x22b));var _0x2e3f61=h5gg[_0x58b47c(0x210)](),_0x27aed3=h5gg['getResults'](_0x2e3f61);for(var _0x2694f8=0x0;_0x2694f8<_0x2e3f61;_0x2694f8++){this[_0x58b47c(0x21e)]=Number(_0x27aed3[_0x2694f8][_0x58b47c(0x271)])+0x1e8,this[_0x58b47c(0x1e4)]=Number(_0x27aed3[_0x2694f8][_0x58b47c(0x271)])+0x1e4;}h5gg[_0x58b47c(0x261)]();},'clear2d'(){var _0x51c94d=_0x10d3d9;this[_0x51c94d(0x1ec)]();},'initAimLock'(){var _0x57a161=_0x10d3d9;this['initAimValues'](),this[_0x57a161(0x1ec)](),this[_0x57a161(0x234)]!=-0x7b&&clearInterval(this[_0x57a161(0x234)]),this[_0x57a161(0x234)]=-0x7b,this['rootComponent']=null;},'aimLockF'(){var _0x224f85=_0x10d3d9;if(!this['aimLock'])return;var _0x28225e=this[_0x224f85(0x249)],_0x58f80a={'Location':{'X':this[_0x224f85(0x1f6)](_0x28225e),'Y':this[_0x224f85(0x1f6)](_0x28225e+0x4),'Z':this[_0x224f85(0x1f6)](_0x28225e+0x4+0x4)},'Rotation':{'Pitch':this[_0x224f85(0x1f6)](_0x28225e+0xc),'Yaw':this['readFloat'](_0x28225e+0xc+0x4),'Roll':this[_0x224f85(0x1f6)](_0x28225e+0xc+0x4+0x4)},'FOV':this[_0x224f85(0x1f6)](_0x28225e+0x28)};this[_0x224f85(0x26f)]=this[_0x224f85(0x1f6)](_0x28225e+0xc),this[_0x224f85(0x27b)]=this[_0x224f85(0x1f6)](_0x28225e+0xc+0x4),this[_0x224f85(0x1d0)]=this['readFloat'](_0x28225e+0xc+0x4+0x4);var _0x2eb7b0=this['RotatorToMatrix'](_0x58f80a[_0x224f85(0x1f3)]),_0x410c63=0x0;_0x410c63==0x0&&this[_0x224f85(0x233)](this['sWidth']/0x2,this[_0x224f85(0x208)]/0x2,0xf,_0x224f85(0x240),![]);var _0x4745d7=0x3e8,_0x21f461=null;for(var _0xb60c56=0x0;_0xb60c56<this[_0x224f85(0x281)]['length'];_0xb60c56++){var _0x1b47dd=this[_0x224f85(0x281)][_0xb60c56];if(_0x1b47dd[_0x224f85(0x1f1)])continue;if(_0x1b47dd[_0x224f85(0x266)]=='dead')continue;!this[_0x224f85(0x200)]&&_0x1b47dd[_0x224f85(0x266)]=='sleep'?this[_0x224f85(0x206)]=![]:this[_0x224f85(0x206)]=!![];_0x1b47dd['hp']=this['readFloat'](_0x1b47dd[_0x224f85(0x1bb)]+0xc44);var _0x30481b=_0x1b47dd[_0x224f85(0x1bb)],_0x254135=this[_0x224f85(0x259)](_0x30481b+0x2c8),_0x3afef0={'X':this[_0x224f85(0x1f6)](_0x254135+0x290),'Y':this[_0x224f85(0x1f6)](_0x254135+0x290+0x4),'Z':this[_0x224f85(0x1f6)](_0x254135+0x290+0x4+0x4)},_0x299d80=(_0x3afef0['X']-_0x58f80a[_0x224f85(0x1b8)]['X'])/0x64,_0x13cb6b=(_0x3afef0['Y']-_0x58f80a[_0x224f85(0x1b8)]['Y'])/0x64,_0x5a3ab5=(_0x3afef0['Z']-_0x58f80a[_0x224f85(0x1b8)]['Z'])/0x64,_0x5dea55=Math[_0x224f85(0x1d5)](Math[_0x224f85(0x26b)](_0x5a3ab5*_0x5a3ab5+_0x299d80*_0x299d80+_0x13cb6b*_0x13cb6b));if(_0x5dea55>0x4b0)continue;var _0x39c106={'X':_0x3afef0['X'],'Y':_0x3afef0['Y'],'Z':_0x3afef0['Z']+0x46},_0x5849d5=this[_0x224f85(0x24f)](_0x39c106,_0x58f80a,_0x2eb7b0);_0x299d80=_0x5849d5['X']-this[_0x224f85(0x26a)]/0x2,_0x13cb6b=_0x5849d5['Y']-this[_0x224f85(0x208)]/0x2,_0x5dea55=Math[_0x224f85(0x26b)](_0x299d80*_0x299d80+_0x13cb6b*_0x13cb6b);_0x5dea55<0x23&&_0x5dea55<_0x4745d7&&(_0x4745d7=_0x5dea55,_0x21f461=_0x254135);if(!this[_0x224f85(0x246)]['enable'])this['clearctx']();else this[_0x224f85(0x246)]['enable']&&(this[_0x224f85(0x246)][_0x224f85(0x201)]=![]);this[_0x224f85(0x246)]['aimlock']&&(this[_0x224f85(0x233)](this[_0x224f85(0x26a)]/0x2,this['sHeight']/0x2,0xf,_0x224f85(0x240),![]),this['drawCircle'](_0x5849d5['X'],_0x5849d5['Y'],0x3,'red',![]));}if(this[_0x224f85(0x262)]!=_0x21f461&&_0x21f461!=null){if(this[_0x224f85(0x234)]!=-0x7b)clearInterval(this[_0x224f85(0x234)]);this[_0x224f85(0x234)]=setInterval(this[_0x224f85(0x217)],0xa,_0x21f461);}},'followAim'(_0x29b464){var _0x1fab6d=_0x10d3d9;this['rootComponent']=_0x29b464;var _0x367d60={'X':this['readFloat'](_0x29b464+0x290),'Y':this[_0x1fab6d(0x1f6)](_0x29b464+0x290+0x4),'Z':this['readFloat'](_0x29b464+0x290+0x4+0x4)+0x46},_0x1025de=this[_0x1fab6d(0x249)],_0x43cec0={'Location':{'X':this['readFloat'](_0x1025de),'Y':this[_0x1fab6d(0x1f6)](_0x1025de+0x4),'Z':this[_0x1fab6d(0x1f6)](_0x1025de+0x4+0x4)}},_0x488604=Math[_0x1fab6d(0x27c)](_0x367d60['Y']-_0x43cec0[_0x1fab6d(0x1b8)]['Y'],_0x367d60['X']-_0x43cec0['Location']['X'])*0xb4/Math['PI'],_0x257800=this[_0x1fab6d(0x1f6)](this[_0x1fab6d(0x21e)]),_0x5ea6a5=this['readFloat'](this['CameraY']),_0x1c1374=this[_0x1fab6d(0x20b)](_0x367d60['X']-_0x43cec0[_0x1fab6d(0x1b8)]['X'],_0x367d60['Y']-_0x43cec0[_0x1fab6d(0x1b8)]['Y'],_0x367d60['Z']-_0x43cec0[_0x1fab6d(0x1b8)]['Z'],0x0,0x0,0x1);if(Math['abs'](_0x488604-_0x257800)>0xa||Math[_0x1fab6d(0x27a)](_0x1c1374-_0x5ea6a5)>0xa){if(this[_0x1fab6d(0x234)]!=-0x7b)clearInterval(this[_0x1fab6d(0x234)]);this[_0x1fab6d(0x234)]=-0x7b,this[_0x1fab6d(0x262)]=null;}this[_0x1fab6d(0x206)]&&(h5gg[_0x1fab6d(0x252)](this['CameraX'],_0x488604,_0x1fab6d(0x203)),h5gg[_0x1fab6d(0x252)](this[_0x1fab6d(0x1e4)],_0x1c1374+this[_0x1fab6d(0x225)][_0x1fab6d(0x268)],_0x1fab6d(0x203)));},'getAngle'(_0x4af8f1,_0x119b15,_0x494eee,_0x47965a,_0x5c4ddf,_0x1c3d1b){var _0x5c5dbc=_0x10d3d9,_0x78d8e2=_0x4af8f1*_0x47965a+_0x119b15*_0x5c4ddf+_0x494eee*_0x1c3d1b,_0x1d2aa3=Math[_0x5c5dbc(0x26b)](_0x4af8f1*_0x4af8f1+_0x119b15*_0x119b15+_0x494eee*_0x494eee),_0x600b89=Math[_0x5c5dbc(0x26b)](_0x47965a*_0x47965a+_0x5c4ddf*_0x5c4ddf+_0x1c3d1b*_0x1c3d1b);return Math[_0x5c5dbc(0x22d)](_0x78d8e2/_0x1d2aa3/_0x600b89)*0xb4/Math['PI'];},'SimplePistol'(){var _0x2ae078=_0x10d3d9;if(this['btn'][_0x2ae078(0x1d6)]==null){this['btn'][_0x2ae078(0x1d6)]=!![],h5gg['clearResults'](),h5gg[_0x2ae078(0x23d)](_0x2ae078(0x250),_0x2ae078(0x203),_0x2ae078(0x255),_0x2ae078(0x22b)),h5gg[_0x2ae078(0x229)]('0.475','F32',_0x2ae078(0x1f8)),h5gg[_0x2ae078(0x23d)]('0.475',_0x2ae078(0x203),_0x2ae078(0x255),_0x2ae078(0x22b)),h5gg[_0x2ae078(0x1fe)](_0x2ae078(0x25f),'1',_0x2ae078(0x203));var _0x1fbfe9=h5gg['getResultsCount'](),_0xa5048d=h5gg[_0x2ae078(0x1fe)](_0x1fbfe9);for(var _0x127713=0x0;_0x127713<_0x1fbfe9;_0x127713++){h5gg[_0x2ae078(0x252)](_0xa5048d[_0x127713][_0x2ae078(0x271)],_0x2ae078(0x25f),_0x2ae078(0x203)),h5gg[_0x2ae078(0x261)]();}alert(_0x2ae078(0x1d2));}},'shotgun'(){var _0x3977af=_0x10d3d9;if(this[_0x3977af(0x1da)]==null){h5gg['clearResults'](),h5gg[_0x3977af(0x23d)](_0x3977af(0x250),_0x3977af(0x203),_0x3977af(0x255),_0x3977af(0x22b)),h5gg[_0x3977af(0x229)](_0x3977af(0x1de),'F32',_0x3977af(0x1f8)),h5gg['searchNumber'](_0x3977af(0x1de),'F32','0x00000000','0x200000000'),h5gg[_0x3977af(0x1fe)]('1',_0x3977af(0x203));var _0x444393=h5gg[_0x3977af(0x210)](),_0x5ea211=h5gg[_0x3977af(0x1fe)](_0x444393);for(var _0x505d28=0x0;_0x505d28<_0x444393;_0x505d28++){var _0x2161a6=_0x5ea211[_0x505d28]['address'];this['shotgunAddr']=_0x2161a6,h5gg[_0x3977af(0x252)](_0x2161a6,input[_0x3977af(0x268)],'F32');}h5gg[_0x3977af(0x261)]();}},'AR'(){var _0x27b89e=_0x10d3d9;h5gg['searchNumber']('-2.5625',_0x27b89e(0x203),_0x27b89e(0x255),_0x27b89e(0x22b)),h5gg['searchNearby'](_0x27b89e(0x21c),_0x27b89e(0x203),_0x27b89e(0x1f8)),h5gg[_0x27b89e(0x273)](_0x27b89e(0x25f),_0x27b89e(0x203)),h5gg[_0x27b89e(0x261)]();},'RPG'(){var _0x2e0397=_0x10d3d9;h5gg['searchNumber'](_0x2e0397(0x250),_0x2e0397(0x203),'0x00000000','0x200000000'),h5gg[_0x2e0397(0x229)](_0x2e0397(0x1b6),_0x2e0397(0x203),_0x2e0397(0x1f8)),h5gg[_0x2e0397(0x273)](_0x2e0397(0x25f),_0x2e0397(0x203)),h5gg[_0x2e0397(0x261)]();},'track'(){var _0x5a6fa2=_0x10d3d9;this[_0x5a6fa2(0x265)][_0x5a6fa2(0x282)]==undefined&&(this[_0x5a6fa2(0x265)][_0x5a6fa2(0x282)]=!![],h5gg[_0x5a6fa2(0x261)](),h5gg[_0x5a6fa2(0x23d)](_0x5a6fa2(0x256),'F32',_0x5a6fa2(0x1eb),_0x5a6fa2(0x1cd)),h5gg[_0x5a6fa2(0x229)](_0x5a6fa2(0x202),_0x5a6fa2(0x203),_0x5a6fa2(0x1ed)),h5gg[_0x5a6fa2(0x273)]('30','F32'),h5gg['clearResults'](),alert(_0x5a6fa2(0x1d2)));},'vulcan99'(){var _0x50ba5b=_0x10d3d9;this[_0x50ba5b(0x265)][_0x50ba5b(0x280)]==undefined&&(this[_0x50ba5b(0x265)][_0x50ba5b(0x280)]=!![],h5gg['clearResults'](),h5gg[_0x50ba5b(0x23d)](_0x50ba5b(0x25a),_0x50ba5b(0x241),_0x50ba5b(0x255),_0x50ba5b(0x1d1)),h5gg[_0x50ba5b(0x229)]('1','F32',_0x50ba5b(0x1ed)),h5gg[_0x50ba5b(0x23d)]('1',_0x50ba5b(0x203),_0x50ba5b(0x255),_0x50ba5b(0x1d1)),h5gg['editAll']('30',_0x50ba5b(0x203)),h5gg[_0x50ba5b(0x261)](),h5gg['searchNumber'](_0x50ba5b(0x1c5),_0x50ba5b(0x203),_0x50ba5b(0x255),_0x50ba5b(0x1d1)),h5gg['searchNearby']('1',_0x50ba5b(0x203),_0x50ba5b(0x1ed)),h5gg[_0x50ba5b(0x23d)]('1',_0x50ba5b(0x203),'0x00000000',_0x50ba5b(0x1d1)),h5gg[_0x50ba5b(0x273)]('30',_0x50ba5b(0x203)),h5gg['clearResults'](),alert(_0x50ba5b(0x1d2)));},'FabSniper'(){var _0x1c51b5=_0x10d3d9;if(this[_0x1c51b5(0x265)][_0x1c51b5(0x267)]==![]){this[_0x1c51b5(0x265)]['fabSniper']=!![],h5gg[_0x1c51b5(0x261)](),h5gg[_0x1c51b5(0x23d)]('-2.5625',_0x1c51b5(0x203),'0x00000000',_0x1c51b5(0x22b)),h5gg['searchNearby']('0.3',_0x1c51b5(0x203),_0x1c51b5(0x1f8)),h5gg[_0x1c51b5(0x23d)](_0x1c51b5(0x218),_0x1c51b5(0x203),_0x1c51b5(0x255),_0x1c51b5(0x22b)),h5gg[_0x1c51b5(0x1fe)]('1','F32');var _0x4e0998=h5gg[_0x1c51b5(0x1fe)](0x1);console[_0x1c51b5(0x260)](_0x4e0998),h5gg[_0x1c51b5(0x252)](_0x4e0998[0x0][_0x1c51b5(0x271)],_0x1c51b5(0x25f),_0x1c51b5(0x203)),alert(_0x1c51b5(0x1d2)),h5gg[_0x1c51b5(0x261)]();}},'ClearMesh'(){var _0x47d7b4=_0x10d3d9;alert(_0x47d7b4(0x211));},'vivVision'(){var _0x4d747a=_0x10d3d9;if(!this[_0x4d747a(0x20f)][_0x4d747a(0x271)][_0x4d747a(0x1d3)]){h5gg[_0x4d747a(0x261)](),h5gg[_0x4d747a(0x23d)](_0x4d747a(0x1ad),_0x4d747a(0x203),'0x100000000','0x160000000'),h5gg['getResults']('100',_0x4d747a(0x203));var _0x546516=h5gg[_0x4d747a(0x210)](),_0x40e19f=h5gg[_0x4d747a(0x1fe)](_0x546516);for(var _0x1888b2=0x0;_0x1888b2<_0x546516;_0x1888b2++){var _0x2011c1=_0x40e19f[_0x1888b2][_0x4d747a(0x271)];h5gg[_0x4d747a(0x252)](_0x2011c1,0x3e7,_0x4d747a(0x203)),this[_0x4d747a(0x20f)][_0x4d747a(0x271)][_0x4d747a(0x23f)](_0x2011c1);}h5gg[_0x4d747a(0x261)]();}else for(var _0x1888b2=0x0;_0x1888b2<this['vivSet']['address']['length'];_0x1888b2++){if(this[_0x4d747a(0x20f)]['enable'])h5gg[_0x4d747a(0x252)](this['vivSet']['address'][_0x1888b2],'999',_0x4d747a(0x203));else h5gg['setValue'](this[_0x4d747a(0x20f)][_0x4d747a(0x271)][_0x1888b2],_0x4d747a(0x1ad),_0x4d747a(0x203));}},'grassVision'(){var _0x2efdee=_0x10d3d9;if(!this[_0x2efdee(0x232)][_0x2efdee(0x271)][_0x2efdee(0x1d3)]){h5gg[_0x2efdee(0x261)](),h5gg[_0x2efdee(0x23d)](_0x2efdee(0x236),_0x2efdee(0x1ff),_0x2efdee(0x1eb),_0x2efdee(0x1cd)),h5gg['getResults'](_0x2efdee(0x1ea),_0x2efdee(0x1ff));var _0x539a7a=h5gg[_0x2efdee(0x210)](),_0x18dd5b=h5gg[_0x2efdee(0x1fe)](_0x539a7a);for(var _0x4f7ee9=0x0;_0x4f7ee9<_0x539a7a;_0x4f7ee9++){var _0x163083=_0x18dd5b[_0x4f7ee9][_0x2efdee(0x271)];h5gg['setValue'](_0x163083,2.7168413173e-314,_0x2efdee(0x1ff)),this[_0x2efdee(0x232)][_0x2efdee(0x271)]['push'](_0x163083);}h5gg[_0x2efdee(0x261)]();}else for(var _0x4f7ee9=0x0;_0x4f7ee9<this[_0x2efdee(0x232)]['address'][_0x2efdee(0x1d3)];_0x4f7ee9++){if(this['grassSet'][_0x2efdee(0x243)])h5gg[_0x2efdee(0x252)](this[_0x2efdee(0x232)][_0x2efdee(0x271)][_0x4f7ee9],'2.716841317300385e-314',_0x2efdee(0x1ff));else h5gg['setValue'](this['grassSet'][_0x2efdee(0x271)][_0x4f7ee9],'2.575036587209649e-314',_0x2efdee(0x1ff));}},'dungeonVision'(){var _0x12a2f4=_0x10d3d9;h5gg[_0x12a2f4(0x261)](),h5gg[_0x12a2f4(0x23d)](_0x12a2f4(0x214),_0x12a2f4(0x1ff),_0x12a2f4(0x1eb),_0x12a2f4(0x1cd)),h5gg['searchNearby']('0.85',_0x12a2f4(0x203),'0x10'),h5gg[_0x12a2f4(0x273)]('30',_0x12a2f4(0x203)),h5gg['clearResults']();},'waterVision'(){var _0x3b1b03=_0x10d3d9;if(!this[_0x3b1b03(0x1b2)][_0x3b1b03(0x271)][_0x3b1b03(0x1d3)]){h5gg[_0x3b1b03(0x261)](),h5gg[_0x3b1b03(0x23d)](_0x3b1b03(0x1e2),'F64',_0x3b1b03(0x1eb),_0x3b1b03(0x1cd)),h5gg[_0x3b1b03(0x229)]('1',_0x3b1b03(0x241),_0x3b1b03(0x1f8)),h5gg[_0x3b1b03(0x229)]('1',_0x3b1b03(0x203),_0x3b1b03(0x1c3)),h5gg['searchNearby']('1',_0x3b1b03(0x241),_0x3b1b03(0x1c3)),h5gg[_0x3b1b03(0x23d)]('1',_0x3b1b03(0x241),_0x3b1b03(0x1eb),_0x3b1b03(0x1cd)),h5gg[_0x3b1b03(0x1fe)](_0x3b1b03(0x1ea),_0x3b1b03(0x241));var _0x3362c3=h5gg[_0x3b1b03(0x210)](),_0x2a829b=h5gg[_0x3b1b03(0x1fe)](_0x3362c3);for(var _0x16f6ee=0x0;_0x16f6ee<_0x3362c3;_0x16f6ee++){var _0x1361ef=_0x2a829b[_0x16f6ee][_0x3b1b03(0x271)];h5gg[_0x3b1b03(0x252)](_0x1361ef,0xc,_0x3b1b03(0x241)),this['waterSet']['address']['push'](_0x1361ef);}h5gg['clearResults']();}else for(var _0x16f6ee=0x0;_0x16f6ee<this['waterSet']['address'][_0x3b1b03(0x1d3)];_0x16f6ee++){if(this[_0x3b1b03(0x1b2)]['enable'])h5gg[_0x3b1b03(0x252)](this[_0x3b1b03(0x1b2)][_0x3b1b03(0x271)][_0x16f6ee],0xc,_0x3b1b03(0x241));else h5gg['setValue'](this[_0x3b1b03(0x1b2)][_0x3b1b03(0x271)][_0x16f6ee],0x1,_0x3b1b03(0x241));}},'floorVision'(){var _0x319c8e=_0x10d3d9;if(!this[_0x319c8e(0x1ca)]['address']['length']){h5gg[_0x319c8e(0x261)](),h5gg['searchNumber'](_0x319c8e(0x1d7),_0x319c8e(0x241),_0x319c8e(0x1eb),_0x319c8e(0x1cd)),h5gg[_0x319c8e(0x1fe)]('100',_0x319c8e(0x241));var _0x46843b=h5gg[_0x319c8e(0x210)](),_0x571c35=h5gg[_0x319c8e(0x1fe)](_0x46843b);for(var _0x3a021a=0x0;_0x3a021a<_0x46843b;_0x3a021a++){var _0x3e2bc0=_0x571c35[_0x3a021a][_0x319c8e(0x271)];h5gg['setValue'](_0x3e2bc0,-0x1,_0x319c8e(0x241)),this['floorSet'][_0x319c8e(0x271)]['push'](_0x3e2bc0);}h5gg[_0x319c8e(0x261)]();}else for(var _0x3a021a=0x0;_0x3a021a<this['floorSet']['address'][_0x319c8e(0x1d3)];_0x3a021a++){if(this[_0x319c8e(0x1ca)]['enable'])h5gg['setValue'](this[_0x319c8e(0x1ca)]['address'][_0x3a021a],'-1',_0x319c8e(0x241));else h5gg[_0x319c8e(0x252)](this['floorSet']['address'][_0x3a021a],_0x319c8e(0x1d7),_0x319c8e(0x241));}},'waterFireF'(){var _0x4b7b5c=_0x10d3d9;const _0xaf555=this['waterFire'][_0x4b7b5c(0x243)]?1e-7:0x3e7;if(this[_0x4b7b5c(0x226)][_0x4b7b5c(0x271)]==null){h5gg[_0x4b7b5c(0x23d)]('56623104',_0x4b7b5c(0x241),_0x4b7b5c(0x23c),_0x4b7b5c(0x22b)),h5gg[_0x4b7b5c(0x229)]('6',_0x4b7b5c(0x203),_0x4b7b5c(0x1d4)),h5gg[_0x4b7b5c(0x23d)]('6','F32',_0x4b7b5c(0x23c),_0x4b7b5c(0x22b)),h5gg[_0x4b7b5c(0x1fe)]('1',_0x4b7b5c(0x203));var _0x35a652=h5gg[_0x4b7b5c(0x210)](),_0x562376=h5gg[_0x4b7b5c(0x1fe)](_0x35a652);for(var _0x5f55cc=0x0;_0x5f55cc<_0x35a652;_0x5f55cc++){var _0x32b6cf=_0x562376[_0x5f55cc][_0x4b7b5c(0x271)];h5gg['setValue'](_0x32b6cf,_0xaf555,_0x4b7b5c(0x203)),this[_0x4b7b5c(0x226)][_0x4b7b5c(0x271)]=_0x32b6cf;}alert(_0x4b7b5c(0x1d2)),h5gg[_0x4b7b5c(0x261)]();}else h5gg[_0x4b7b5c(0x252)](this[_0x4b7b5c(0x226)][_0x4b7b5c(0x271)],_0xaf555,_0x4b7b5c(0x203));},'nightVision'(){var _0x1f0275=_0x10d3d9;const _0xce0bdb=this[_0x1f0275(0x1b3)][_0x1f0275(0x243)]?0x8:0x1;var _0x420942=this[_0x1f0275(0x1b3)][_0x1f0275(0x271)];if(_0x420942[_0x1f0275(0x1d3)]==0x0){h5gg[_0x1f0275(0x23d)](_0x1f0275(0x25e),_0x1f0275(0x203),_0x1f0275(0x1eb),_0x1f0275(0x1cd)),h5gg[_0x1f0275(0x229)](_0x1f0275(0x27d),_0x1f0275(0x203),_0x1f0275(0x1f8)),h5gg['searchNearby']('0.4',_0x1f0275(0x203),_0x1f0275(0x1f8)),h5gg[_0x1f0275(0x1fe)](_0x1f0275(0x1ea),_0x1f0275(0x203));var _0x32f032=h5gg[_0x1f0275(0x210)](),_0x782f6c=h5gg[_0x1f0275(0x1fe)](_0x32f032);for(var _0x54c7ce=0x0;_0x54c7ce<_0x32f032;_0x54c7ce++){_0x420942[_0x1f0275(0x23f)](_0x782f6c[_0x54c7ce][_0x1f0275(0x271)]),h5gg['setValue'](_0x782f6c[_0x54c7ce][_0x1f0275(0x271)],_0xce0bdb,_0x1f0275(0x203));}h5gg[_0x1f0275(0x261)]();}else for(var _0x54c7ce=0x0;_0x54c7ce<_0x420942[_0x1f0275(0x1d3)];_0x54c7ce++){h5gg[_0x1f0275(0x252)](_0x420942[_0x54c7ce],_0xce0bdb,'F32');}}}}),window[_0x10d3d9(0x1b9)][_0x10d3d9(0x24d)]());
+</script>
+
+<style>
+    #app {
+        width: auto;
+        height: 320px;
+        overflow-y: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+    }
+
+    .title {
+        background-color: #4d525e;
+        line-height: 40px;
+        text-align: center;
+        color: #bb0202;
+        letter-spacing: 0;
+    }
+
+    .subTitle {
+        line-height: 20px;
+        text-align: center;
+        color: #9a0c0c;
+        letter-spacing: 0;
+        text-shadow: 0px 3px 3px #4d525e;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .el-collapse-item__header {
+        font-size: 18px;
+    }
+</style>
+
 </html>
-
-    
-
-

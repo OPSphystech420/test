@@ -1,0 +1,1320 @@
+
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.7/lib/theme-chalk/index.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.min.js"></script>
+        <script src="https://unpkg.com/element-ui@2.15.7/lib/index.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
+            
+            .ayimgui {
+                position: fixed;
+                width: 360px;
+                height: 320px;
+                top: calc(50% - 180px);
+                left: calc(50% - 180px);
+                z-index: 999;
+                border-radius: 8px;
+                overflow: hidden;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            
+            .ayimgui::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url("https://cdn.discordapp.com/attachments/1125329626546327573/1130027297945169990/Game_Glitch.png");
+                background-size: cover;
+                opacity: 0.6;
+                z-index: -1;
+            }
+            
+            .onlyTitle {
+                height: 21px !important;
+            }
+            
+            .ayimgui .aytitle {
+                padding: 0 5px;
+                font-size: 16px;
+                background-color: #ff000;
+            }
+            
+            .ayimgui .aytitle .titleClose {
+                position: absolute;
+                top: 3px;
+                right: 6px;
+                color: #f00;
+            }
+            
+            .ayimgui .aytitle .titleClose:hover {
+                color: #ff000;
+            }
+            
+            .aybody {
+                /* ... */
+                overflow: visible; /* "auto" на "visible" */
+                /* ... */
+                height: auto; /* "auto" или фиксированную высоту */
+                /* ... */
+            }
+            
+            
+            .ayimgui .aybody {
+                padding: 15px;
+                height: calc(100% - 21px - 15px - 15px);
+                overflow: auto;
+                font-size: 14px;
+            }
+            
+            .aytext {
+                width: 100%;
+                margin-bottom: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                color: black;
+            }
+            
+            .el-checkbox {
+                margin: 0px;
+            }
+            
+            .el-checkbox__label {
+                color: black;
+            }
+            
+            .el-checkbox__input.is-checked+.el-checkbox__label {
+                color: #400;
+            }
+            
+            .el-checkbox__inner {
+                background-color: rgb(254, 254, 254);
+                border: none;
+            }
+            
+            .el-radio {
+                margin: 0px 0;
+            }
+            
+            .el-radio__label {
+                color: #364;
+            }
+            
+            .el-radio__input.is-checked+.el-radio__label {
+                color: #409EFF;
+            }
+            
+            .el-radio__inner {
+                background-color: rgb(254, 254, 254);
+                border: none;
+            }
+            
+            .el-radio__input.is-checked .el-radio__inner {
+                background-color: rgb(254, 254, 254);
+            }
+            
+            .el-radio__inner::after {
+                width: 10px;
+                height: 10px;
+                background-color: rgb(58, 138, 247);
+            }
+            
+            .onlySelect {
+                background-color: rgb(254, 254, 254);
+                border: none;
+            }
+            
+            .onlySelect .el-select-dropdown__item {
+                color: #000;
+            }
+            
+            .onlySelect .el-select-dropdown__item.hover,
+            .el-select-dropdown__item:hover:hover {
+                background-color: transparent;
+            }
+            
+            .onlySelect .popper__arrow {
+                border-bottom-color: rgb(254, 254, 254) !important;
+            }
+            
+            .onlySelect.el-popper[x-placement^=bottom] .popper__arrow::after {
+                border-bottom-color: rgb(8254, 254, 254) !important;
+            }
+            
+            .el-select {
+                width: 100%;
+            }
+            
+            .el-select .el-input {
+                background-color: rgb(254, 254, 254);
+            }
+            
+            .el-select .el-input__suffix {
+                background-color: rgb(160, 196, 243);
+                color: #000;
+                right: 0;
+            }
+            
+            .el-select .el-select__caret {
+                color: #000;
+            }
+            
+            .el-select .el-input__inner {
+                background-color: transparent;
+                border: none;
+                color: #000;
+            }
+            
+            .el-select .el-input .el-select__caret {
+                color: #000;
+            }
+            
+            .el-scrollbar .el-scrollbar__bar {
+                opacity: 1 !important;
+            }
+            
+            .el-button {
+                font-size: 14px;
+                padding: 5px 10px;
+                line-height: 14px;
+                color: #000;
+                background-color: #B8D1F2;
+            }
+            
+            .el-button:hover {
+                opacity: .7;
+                color: #000;
+                background-color: #B8D1F2;
+            }
+            
+            .el-button:focus,
+            .el-button:hover {
+                color: #000;
+                background-color: #B8D1F2;
+            }
+            
+            .aycollapse {
+                width: 100%;
+                font-size: 14px;
+                background-color: rgb(177, 206, 240);
+                color: #000;
+            }
+            
+            .aytab {
+                width: 100%;
+                height: 20px;
+                display: flex;
+                border-bottom: 2px solid rgb(200, 217, 233);
+            }
+            
+            .aytab span {
+                padding: 0 7px;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: rgb(189, 199, 208);
+                color: #000;
+                font-size: 14px;
+                font-weight: 500;
+                margin-left: 7px;
+                border-radius: 6px 6px 0 0;
+                cursor: pointer;
+            }
+            
+            .el-input input {
+                background-color: rgb(254, 254, 254);
+                border: none;
+                border-radius: 0px;
+            }
+            
+            .toggle_input {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 5;
+                opacity: 0;
+                cursor: pointer;
+            }
+            
+            .toggle_label {
+                width: 37.5px;
+                height: 20px;
+                background: #ccc;
+                position: relative;
+                display: inline-block;
+                border-radius: 10px;
+                transition: 1s;
+                box-sizing: border-box;
+            }
+            
+            .toggle_label:after {
+                content: "";
+                position: absolute;
+                width: 18px;
+                height: 18px;
+                border-radius: 100%;
+                left: 1.5;
+                top: 0.9;
+                z-index: 0;
+                background: #fff;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+                transition: 1s;
+            }
+            
+            .toggle_input:checked+.toggle_label {
+                background-color: black;
+            }
+            
+            .toggle_input:checked+.toggle_label:after {
+                left: 18.5px;
+            }
+            
+            .toggle_button {
+                position: relative;
+                width: 37.5px;
+                height: 17.5px;
+                margin-right: -195px;
+                margin-top: 3px;
+                margin-bottom: 5px;
+            }
+            
+            button {
+                height: 30px;
+                background-color: #84848450;
+                display: inline-block;
+                cursor: pointer;
+                text-align: center;
+                text-decoration: none;
+                outline: none;
+                border: none;
+                border-radius: 5px;
+            }
+            
+            button:active {
+                transformer: translateY(2px);
+            }
+            
+            input[type=radio] {
+                width: 15px;
+                height: 15px;
+                margin-right: 3px;
+                border: none;
+                outline-style: none;
+                -webkit-appearance: none;
+                vertical-align: middle;
+                border: 1px solid #686868F0;
+                border-radius: 100%;
+            }
+            
+            input[type=radio]:checked {
+                border: 3px solid #2F7DCDF0;
+                background: #E8E8E8;
+            }
+            
+            input[type=checkbox] {
+                visibility: hidden;
+                vertical-align: middle;
+                margin-bottom: 25px;
+                cursor: pointer;
+                position: relative;
+                width: 0px;
+                height: 0px;
+            }
+            
+            input[type=checkbox]::after {
+                position: absolute;
+                top: 0;
+                margin-top: 2px;
+                width: 14px;
+                height: 14px;
+                border-radius: 3px;
+                background-color: rgba(0, 0, 0, 0);
+                display: inline-block;
+                visibility: visible;
+                text-align: center;
+                content: ' ';
+            }
+            
+            input[type=checkbox]:checked::after {
+                content: "✓";
+                color: #FFF;
+                border-color: #B8B8B8;
+                background-color: #4498F7;
+                font-size: 12px;
+                font-weight: bold;
+            }
+            
+            input[type=range] {
+                -webkit-appearance: none;
+            }
+            
+            input[type=range]:focus {
+                outline: none;
+            }
+            
+            input[type=range]::-webkit-slider-runnable-track {
+                height: 15x;
+                cursor: pointer;
+                animate: 0.2s;
+                background: #68686830;
+                border-radius: 5px;
+                border: 1px solid #010101;
+            }
+            
+            input[type=range]::-webkit-slider-thumb {
+                border: 1.5px solid transparent;
+                height: 20px;
+                width: 10px;
+                border-radius: 11px;
+                background: #EEEEEEE0;
+                cursor: pointer;
+                -webkit-appearance: none;
+                margin-top: -0.2px;
+            }
+            
+            input[type=range]:focus::-webkit-slider-runnable-track {
+                background: #367ebd;
+            }
+            
+            .scrollbar {
+                overflow-x: hidden;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .scrollbar::-webkit-scrollbar {
+                width: 5px;
+                height: 5px;
+                background-color: transparent;
+            }
+            
+            .scrollbar::-webkit-scrollbar-track {
+                -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+                border-radius: 10px;
+                background-color: transparent;
+            }
+            
+            .scrollbar::-webkit-scrollbar-thumb {
+                border-radius: 15px;
+                -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+                background-color: transparent;
+            }
+            
+            .menubox {
+                width: 70px;
+                height: 30px;
+                line-height: 30px;
+                text-align: center;
+            }
+            
+            .menubox.current {
+                background-color: #BBBBBB;
+            }
+            
+            .menuview {
+                display: none;
+                overflow-x: hidden;
+                overflow-y: scroll;
+                height: 100%;
+            }
+            
+            .menuviewer {
+                overflow-x: hidden;
+                overflow-y: scroll;
+                height: 100%;
+            }
+            
+        </style>
+        
+        <style>
+            /* Стили для меню */
+            .menuview {
+                display: none;
+                overflow-x: hidden;
+                overflow-y: scroll;
+                height: 100%;
+            }
+            
+            .command {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+            
+            .command-name {
+                color: black;
+            }
+            
+            .copy-button {
+                height: 30px;
+                background-color: #BDC7D0;
+                display: inline-block;
+                cursor: pointer;
+                text-align: center;
+                text-decoration: none;
+                outline: none;
+                border: none;
+                border-radius: 5px;
+                padding: 0 10px;
+                color: black;
+            }
+        </style>
+        
+        <style>
+            .copy-button {
+                background-color: #BDC7D0;
+                color: black;
+                padding: 5px 10px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+        </style>
+        
+        <style>
+            .command {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+            
+            .command-name {
+                color: #BDC7D0;
+            }
+            
+            .copy-button {
+                font-style: italic;
+                height: 30px;
+                background-color: #BDC7D0;
+                display: inline-block;
+                cursor: pointer;
+                text-align: center;
+                text-decoration: none;
+                outline: none;
+                border: none;
+                border-radius: 5px;
+                padding: 0 10px;
+                color: black;
+                /* Добавляем параметры анимации при нажатии */
+                transition: background-color 0.2s ease, transform 0.1s ease;
+              }
+
+              /* Добавляем стили для анимации при нажатии */
+              .copy-button:active {
+                background-color: #A9B5BE;
+                transform: translateY(1px);
+              }
+            
+            .menuview {
+                display: none;
+                overflow-x: hidden;
+                overflow-y: scroll;
+                height: 100%;
+            }
+            
+            .current {
+                display: block;
+            }
+        </style>
+        
+        <style>
+            /* ... */
+            
+            .aytab {
+                /* ... */
+            }
+            
+            .category {
+                margin-bottom: 10px;
+            }
+            
+            .menuview {
+                margin-top: 10px;
+            }
+            
+            .command {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+            
+            .command-name {
+                flex-grow: 1; /* Добавлено свойство flex-grow */
+                margin-left: 2px; /* Изменено свойство margin-left */
+                margin-right: 5px; /* Изменено свойство margin-right */
+            }
+            
+            .fuck-you-name {
+                color: #BDC7D0;
+                flex-grow: 1; /* Добавлено свойство flex-grow */
+                margin-left: 20px; /* Изменено свойство margin-left */
+                margin-right: 5px; /* Изменено свойство margin-right */
+            }
+            
+            .i-fuck-you {
+                color: #BDC7D0;
+                flex-grow: 1; /* Добавлено свойство flex-grow */
+                margin-left: 5px; /* Изменено свойство margin-left */
+                margin-right: 5px; /* Изменено свойство margin-right */
+            }
+            
+            .checkbox-container {
+                display: flex;
+                align-items: center;
+                margin-top: 5px;
+            }
+            
+            .checkbox-container input[type="checkbox"] {
+                visibility: hidden;
+                vertical-align: middle;
+                margin-right: 5px;
+                cursor: pointer;
+            }
+            
+            .checkbox-container input[type="checkbox"]::after {
+                position: absolute;
+                top: 0;
+                margin-top: 1px;
+                width: 14px;
+                height: 14px;
+                border: 2px solid #686868;
+                border-radius: 3px;
+                background-color: rgba(0, 0, 0, 0);
+                display: inline-block;
+                visibility: visible;
+                text-align: center;
+                content: ' ';
+            }
+            
+            .checkbox-container input[type="checkbox"]:checked::after {
+                content: "✓";
+                color: #FFF;
+                border-color: #B8B8B8;
+                background-color: #4498F7;
+                font-size: 12px;
+                font-weight: bold;
+            }
+            
+            .number-input-container {
+                display: flex;
+                align-items: center;
+                margin-left: 10px;
+            }
+            
+            .number-input-container input[type="number"] {
+                width: 60px;
+                margin-left: 10px;
+                margin-right: 1px;
+                vertical-align: middle;
+                border: 2px solid #686868;
+                border-radius: 3px;
+                padding: 2px;
+            }
+            
+            
+            
+            /* ... */
+            
+            *{
+                padding: 0;
+                margin: 0;
+            }
+            body{
+                .container{
+                    width: 40vmin;
+                    top: 50%;
+                    left: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-around;
+                    padding: 1px 1px;
+                    border-radius: 5px;
+                }
+            }
+            input[type="range"]{
+                position: relative;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                display: block;
+                width: 80%;
+                height: 8px;
+                background-color: #B8D1F2;
+                border-radius: 8px;
+                outline: none;
+            }
+            input[type="range"]::-webkit-slider-runnable-track{
+                -webkit-appearance: none;
+                height: 8px;
+            }
+            input[type="range"]::-moz-track{
+                -moz-appearance: none;
+                height: 8px;
+            }
+            input[type="range"]::-ms-track{
+                appearance: none;
+                height: 8px;
+            }
+            input[type="range"]::-webkit-slider-thumb{
+                -webkit-appearance: none;
+                height: 20px;
+                width: 20px;
+                background-color: #3264fe;
+                border-radius: 50%;
+                cursor: pointer;
+                margin-top: -6px;
+                border: none;
+            }
+            input[type="range"]::-moz-range-thumb{
+                -webkit-appearance: none;
+                height: 20px;
+                width: 20px;
+                background-color: #B8D1F2;
+                border-radius: 50%;
+                cursor: pointer;
+                margin-top: -6px;
+                border: none;
+            }
+            input[type="range"]::-ms-thumb{
+                appearance: none;
+                height: 20px;
+                width: 20px;
+                background-color: #B8D1F2;
+                border-radius: 50%;
+                cursor: pointer;
+                margin-top: -6px;
+                border: none;
+            }
+            input[type="range"]:active::-webkit-slider-thumb{
+                background-color: #ffffff;
+                border: 3px solid #B8D1F2;
+            }
+            #slider-value{
+                width: 12%;
+                position: relative;
+                color: #ffffff;
+                text-align: center;
+                font-family: "Roboto Mono",monospace;
+                padding: 1px 0;
+                border-radius: 5px;
+            }
+            
+        </style>
+        
+        <style>
+            body {
+              color: #BDC7D0;
+              margin: 0;
+            }
+
+            #contententen {
+                position: absolute;
+                width: 1px;
+                height: 10px;
+                          transform: translate(32500%, -100%);
+            }
+
+            #contententen.on {
+              -webkit-animation-name: in-out;
+              animation-name: in-out;
+              -webkit-animation-duration: 0.7s;
+              animation-duration: 0.7s;
+              -webkit-animation-timing-function: linear;
+              animation-timing-function: linear;
+              -webkit-animation-iteration-count: 1;
+              animation-iteration-count: 1;
+            }
+
+            .input {
+              box-sizing: border-box;
+              width: 10px;
+              height: 10px;
+              border: 1px solid #BDC7D0;
+              border-radius: 50%;
+              background: none;
+              color: #BDC7D0;
+              font-size: 16px;
+              font-weight: 400;
+              font-family: Roboto;
+              outline: 0;
+              -webkit-transition: width 0.4s ease-in-out, border-radius 0.8s ease-in-out,
+                padding 0.2s;
+              transition: width 0.4s ease-in-out, border-radius 0.8s ease-in-out,
+                padding 0.2s;
+              -webkit-transition-delay: 0.4s;
+              transition-delay: 0.4s;
+              -webkit-transform: translate(-100%, -50%);
+              -ms-transform: translate(-100%, -50%);
+              transform: translate(-100%, -50%);
+            }
+
+            .search {
+              background: none;
+              position: absolute;
+              top: 0px;
+              left: 0;
+              height: 10px;
+              width: 10px;
+              padding: 0;
+              border-radius: 100%;
+              outline: 0;
+              border: 0;
+              color: inherit;
+              cursor: pointer;
+              -webkit-transition: 0.2s ease-in-out;
+              transition: 0.2s ease-in-out;
+              -ms-transform: translate(-100%, -50%);
+              transform: translate(-100%, -50%);
+            }
+
+            .search:before {
+              content: "";
+              position: absolute;
+              width: 5px;
+              height: 2px;
+              background-color: #BDC7D0;
+              -webkit-transform: rotate(45deg);
+              -ms-transform: rotate(45deg);
+              transform: rotate(45deg);
+              margin-top: 5px;
+              margin-left: 3.5px;
+              -webkit-transition: 0.2s ease-in-out;
+              transition: 0.2s ease-in-out;
+            }
+
+            .close {
+              -webkit-transition: 0.4s ease-in-out;
+              transition: 0.4s ease-in-out;
+              -webkit-transition-delay: 0.4s;
+              transition-delay: 0.4s;
+            }
+
+            .close:before {
+              content: "";
+              position: absolute;
+              width: 7px;
+              height: 2px;
+              margin-top: -1px;
+              margin-left: -3.5px;
+              background-color: #BDC7D0;
+              -webkit-transform: rotate(45deg);
+              -ms-transform: rotate(45deg);
+              transform: rotate(45deg);
+              -webkit-transition: 0.2s ease-in-out;
+              transition: 0.2s ease-in-out;
+            }
+
+            .close:after {
+              content: "";
+              position: absolute;
+              width: 7px;
+              height: 2px;
+              background-color: #BDC7D0;
+              margin-top: -1px;
+              margin-left: -3.5px;
+              cursor: pointer;
+              -webkit-transform: rotate(-45deg);
+              -ms-transform: rotate(-45deg);
+              transform: rotate(-45deg);
+            }
+
+            .square {
+              box-sizing: border-box;
+              padding: 0 8px 0 2px;
+              width: 190px;
+              height: 10px;
+              border: 1px solid #BDC7D0;
+              border-radius: 0;
+              background: none;
+              color: #BDC7D0;
+              font-family: Roboto;
+              font-size: 7px;
+              font-weight: 400;
+              outline: 0;
+              -webkit-transition: width 0.4s ease-in-out, border-radius 0.4s ease-in-out,
+                padding 0.2s;
+              transition: width 0.4s ease-in-out, border-radius 0.4s ease-in-out,
+                padding 0.2s;
+              -webkit-transition-delay: 0.4s, 0s, 0.4s;
+              transition-delay: 0.4s, 0s, 0.4s;
+              -webkit-transform: translate(-100%, -50%);
+              -ms-transform: translate(-100%, -50%);
+              transform: translate(-100%, -50%);
+            }
+            
+            
+            
+            
+        </style>
+</head>
+
+
+
+<body>
+    <div id="app">
+        <div :class="!ifshow ? 'onlyTitle ayimgui' : 'ayimgui'" ref="menuMain">
+            <div class="aytitle" @touchstart="titleTouchStart" @touchmove="titleTouchMove">
+                <i :class="ifshow ? 'el-icon-caret-bottom' : 'el-icon-caret-top'" @click="ifshow = !ifshow"></i>
+                <font color="#BDC7D0">
+                    <span class="title-age" style="margin-left:5px">Cmd_menu</span>
+                </font>
+                <form id="contententen" @submit.prevent>
+
+                    <input type="text" name="input" class="input" id="search-input" v-model="searchQuery" :class="{ 'square': isSearchExpanded }" @keydown.enter.prevent>
+
+                      <button type="reset" class="search" id="search-btn" :class="{ 'close': isSearchExpanded }" @click="toggleSearch"></button>
+
+                </form>
+
+                <i class="titleClose el-icon el-icon-close" @click="closeimgui"></i>
+            </div>
+            
+            
+            
+            
+
+           <div class="main-content">
+              <!-- Search bar -->
+              
+              <div v-if="!isSearchExpanded" class="aybody">
+                  
+                  
+                  
+                  
+                  <div class="aytab">
+                      <span class="category" @click="changeTab('one')" :style="{background: tabValue === 'one' ? '#B1CEF0' : '#BDC7D0'}">Bosses</span>
+                      <span class="category" @click="changeTab('two')" :style="{background: tabValue === 'two' ? '#B1CEF0' : '#BDC7D0'}">Premium</span>
+                      <span class="category" @click="changeTab('three')" :style="{background: tabValue === 'three' ? '#B1CEF0' : '#BDC7D0'}">Commands</span>
+                      <span class="category" @click="changeTab('four')" :style="{background: tabValue === 'four' ? '#B1CEF0' : '#bdc7d0'}">Skins</span>
+                      <span class="category" @click="changeTab('five')" :style="{background: tabValue === 'five' ? '#B1CEF0' : '#bdc7d0'}">Dinos</span>
+                  </div>
+                  
+                  
+                  
+                  <div v-if="tabValue === 'one' || tabValue === 'five'">
+                      <div class="command">
+                          <div class="checkbox-container">
+                              <input type="checkbox" v-model="isChecked">
+                                  <span class="checkmark"></span>
+                          </div>
+                          <div class="fuck-you-name">Tamed</div>
+                          <div class="number-input-container">
+                              <input type="number" min="1" max="300" v-model="commandValue" placeholder="100">
+                                  <div class="i-fuck-you">lvl</div>
+                          </div>
+                      </div>
+                  </div>
+                  <div v-else>
+                      <div v-if="tabValue === 'two'">
+                          <!-- Здесь добавляем условие для скрытия всего блока command -->
+                          <body>
+                              <head>
+                                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                      <title>Custom Range Slider</title>
+                                      <!-- Google Fonts -->
+                                      <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600&display=swap" rel="stylesheet">
+                                          <!-- Stylesheet -->
+                                          <link rel="stylesheet" href="style.css">
+                                          </head>
+                              <div class="container">
+                                  <div id="slider-value">{{ commandSliderValue }}</div>
+                                  <input type="range" id="my-slider" min="1" max="100" value="1" v-model="commandSliderValue" @input="updateCommandValue">
+                              </div>
+                              <!-- Script -->
+                              <script src="script.js"></script>
+                          </body>
+                      </div>
+                  </div>
+                  
+                  
+                  
+                  
+                  
+                  <div class="menuview" :class="{current: tabValue === 'one'}">
+                      
+                      <div class="category">
+                          <div class="command" style="text-align: center;">
+                              <div class="command-name" style="color: #B8D1F2; font-family: Arial; font-weight: bold; font-size: 24px; margin: 0 auto;">Bosses</div>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Yeti</div>
+                              <button class="copy-button" @click="copyToClipboard(`SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Bigfoot/Yeti_Character_BP.Yeti_Character_BP_C\'&quot; 10 0 0 ${commandValue}`)">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Zomdodo</div>
+                              <button class="copy-button" @click="copyToClipboard(`SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Dodo/ZombieDodo_Character_BP.ZombieDodo_Character_BP_C\'&quot; 10 0 0 ${commandValue}`)">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Argentustus</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Argentavis/Boss_Argent_Character_BP.Boss_Argent_Character_BP_C\'&quot; 10 0 0 ${commandValue}')">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Obsidioequus</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Chalicotherium/Boss_Chalico_Character_BP.Boss_Chalico_Character_BP_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Cubozoa Multis</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Cnidaria/Boss_Cnidaria_Character_BP.Boss_Cnidaria_Character_BP_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Dodobitus</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Dodo/Boss_Dodo_Character_BP.Boss_Dodo_Character_BP_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Doedicurus Vastus</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Doedicurus/Boss_Doed_Character_BP.Boss_Doed_Character_BP_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Gula Beetle</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/DungBeetle/Boss_DungBeetle_Character_BP.Boss_DungBeetle_Character_BP_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Beelzemorbus</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Toad/Boss_Toad_Character_BP.Boss_Toad_Character_BP_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Noctis</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/PrimalEarth/Dinos/Equus/Anticorn_Character_BP.Anticorn_Character_BP_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                          <div class="command" style="text-align: center;">
+                              <div class="command-name" style="color: #B8D1F2; font-family: Arial; font-weight: bold; font-size: 24px; margin: 0 auto;">Dungeon</div>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Argentustus Obstacle</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/ArgentObstacle.ArgentObstacle_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Broodmother Obstacle</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/BroodmotherObstacle.BroodmotherObstacle_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Obsidioequus Obstacle</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/ChalicoObstacle.ChalicoObstacle_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Cnidaria Obstacle</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/CnidariaObstacle.CnidariaObstacle_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Dodobitus Obstacle</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/DodoObstacle.DodoObstacle_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Doedicurus Obstacle</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/Doed_Obstacle.Doed_Obstacle_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Dung Beetle Obstacle</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/DungBeetleObstacle.DungBeetleObstacle_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Gorilla Obstacle</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/GorillaObstacle.GorillaObstacle_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                          <div class="command">
+                              <div class="command-name">Toed Obstacle</div>
+                              <button class="copy-button" @click="copyToClipboard('SpawnActor &quot;Blueprint\'/Game/Mobile/Dungeon/BossArena/Obstacles/ToadObstacle.ToadObstacle_C\'&quot; 10 0 0')">Copy</button>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="menuview" :class="{current: tabValue === 'two'}">
+                      <div class="command">
+                          <div class="command-name">Golden chain</div>
+                          <button class="copy-button" @click="copyToClipboard('admincheat giveslotitem &quot;Blueprint\'/Game/PrimalEarth/CoreBlueprints/Items/Armor/Collars/PrimalItemArmor_GoldenChain.PrimalItemArmor_GoldenChain_C&quot; 1 ' + lastNumber)">Copy</button>
+                          
+                      </div>
+                      <div class="command">
+                          <div class="command-name">Command 2</div>
+                          <button class="copy-button" @click="copyToClipboard('Command 2')">Copy</button>
+                      </div>
+                      <div class="command">
+                          <div class="command-name">Command 3</div>
+                          <button class="copy-button" @click="copyToClipboard('Command 3')">Copy</button>
+                      </div>
+                  </div>
+                  <div class="menuview" :class="{current: tabValue === 'three'}">
+                      <div class="command">
+                          <div class="command-name">Command 1</div>
+                          <button class="copy-button" @click="copyToClipboard('Command 1')">Copy</button>
+                      </div>
+                      <div class="command">
+                          <div class="command-name">Command 2</div>
+                          <button class="copy-button" @click="copyToClipboard('Command 2')">Copy</button>
+                      </div>
+                      <div class="command">
+                          <div class="command-name">Command 3</div>
+                          <button class="copy-button" @click="copyToClipboard('Command 3')">Copy</button>
+                      </div>
+                  </div>
+                  <div class="menuview" :class="{current: tabValue === 'four'}">
+                      <div class="command">
+                          <div class="command-name">Command 1</div>
+                          <button class="copy-button" @click="copyToClipboard('Command 1')">Copy</button>
+                      </div>
+                      <div class="command">
+                          <div class="command-name">Command 2</div>
+                          <button class="copy-button" @click="copyToClipboard('Command 2')">Copy</button>
+                      </div>
+                      <div class="command">
+                          <div class="command-name">Command 3</div>
+                          <button class="copy-button" @click="copyToClipboard('Command 3')">Copy</button>
+                      </div>
+                  </div>
+                  <div class="menuview" :class="{current: tabValue === 'five'}">
+                      <div class="command">
+                          <div class="command-name">Command 1</div>
+                          <button class="copy-button" @click="copyToClipboard('Command 1')">Copy</button>
+                      </div>
+                      <div class="command">
+                          <div class="command-name">Command 2</div>
+                          <button class="copy-button" @click="copyToClipboard('Command 2')">Copy</button>
+                      </div>
+                      <div class="command">
+                          <div class="command-name">Command 3</div>
+                          <button class="copy-button" @click="copyToClipboard('Command 3')">Copy</button>
+                      </div>
+                  </div>
+                  
+                  
+              </div>
+              <div v-if="isSearchExpanded" class="aybody">
+                  <div class="command">
+                      <div class="checkbox-container">
+                          <input type="checkbox" v-model="isChecked">
+                              <span class="checkmark"></span>
+                      </div>
+                      <div class="fuck-you-name">Tamed</div>
+                      <div class="number-input-container">
+                          <input type="number" min="1" max="300" v-model="commandValue" placeholder="100">
+                              <div class="i-fuck-you">lvl</div>
+                      </div>
+                  </div>
+                  
+                  <body>
+                      <head>
+                          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                              <title>Custom Range Slider</title>
+                              <!-- Google Fonts -->
+                              <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@600&display=swap" rel="stylesheet">
+                                  <!-- Stylesheet -->
+                                  <link rel="stylesheet" href="style.css">
+                                  </head>
+                      <div class="container">
+                          <div id="slider-value">{{ commandSliderValue }}</div>
+                          <input type="range" id="my-slider" min="1" max="100" value="1" v-model="commandSliderValue" @input="updateCommandValue">
+                      </div>
+                      <!-- Script -->
+                      <script src="script.js"></script>
+                  </body>
+                  
+                  <div class="menuviewer">
+                  <div class="command" v-for="command in filteredCommands" :key="command.name">
+                      <div class="command-name">{{ command.name }}</div>
+                      <button class="copy-button" @click="copyToClipboard(command.copyText(command.useSlider ? commandSliderValue : commandValue))">Copy</button>
+                  </div>
+                  </div>
+
+                  
+
+                  
+                  
+              </div>
+                
+            </div>
+        </div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data() {
+                return {
+                    isChecked: false,
+                    
+                    commands: [
+                      {
+                        name: "Yeti",
+                        copyText: function(value) {
+                          const command = this.isChecked ? 'SpawnActorTamed' : 'SpawnActor';
+                          return `${command} "Blueprint'/Game/PrimalEarth/Dinos/Bigfoot/Yeti_Character_BP.Yeti_Character_BP_C'" 10 0 0 ${value}`;
+                        }
+                      },
+                      {
+                        name: "Golden chain",
+                        copyText: (value) => `"Blueprint'/Game/PrimalEarth/CoreBlueprints/Items/Armor/Collars/PrimalItemArmor_GoldenChain.PrimalItemArmor_GoldenChain_C'" 1 ${value}`,
+                        commandValue: 1,
+                        useSlider: true
+                      },
+                      {
+                        name: "Command 3",
+                        copyText: "Custom text for Command 3",
+                      }
+                    ],
+                    searchQuery: '',
+                    
+                    showCommands: true,
+                    isSearchExpanded: false,
+                    commandSliderValue: 1,
+                    commandValue: 100,
+                    lastNumber: 1,
+                    ifshow: true,
+                    checked: false,
+                    radio: '1',
+                    activeSelect: '',
+                    input: "",
+                    showOption: false,
+                    tabValue: "one",
+                }
+            },
+            
+            computed: {
+                filteredCommands() {
+                    if (!this.searchQuery) { // если поисковый запрос пустой, вернуть все команды
+                        return this.commands;
+                    } else {
+                    return this.commands.filter(command =>
+                        command.name &&
+                        this.searchQuery &&
+                        command.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+                    );
+                    }
+                },
+                searchProxy: {
+                  get() {
+                    return this.searchQuery;
+                  },
+                  set(newValue) {
+                    this.searchQuery = newValue;
+                    this.filteredCommands = this.commands.filter(command => command.name.includes(this.searchQuery));
+                  }
+                }
+            },
+            
+            mounted() {
+                
+                this.setRect(360, 320);
+                var sWidth = window.screen.width;
+                var sHeight = window.screen.height;
+                if (window.screen.availWidth > window.screen.availHeight) {
+                    sWidth = window.screen.height;
+                    sHeight = window.screen.width;
+                }
+                setWindowRect(0, 0, sWidth, sHeight);
+                setButtonAction(function () {
+                    var menu = document.querySelector("#app");
+                    if (menu.style.display == 'none') {
+                        menu.style.display = 'block';
+                        setWindowTouch(true);
+                    } else {
+                        menu.style.display = 'none';
+                        setWindowTouch(false);
+                    }
+                });
+            },
+            
+            methods: {
+
+                
+                expandSearch() {
+                    this.isSearchExpanded = !this.isSearchExpanded;
+                    this.showCommands = !this.isSearchExpanded;
+                  },
+                
+                closeSearch() {
+                  this.isSearchExpanded = false;
+                },
+                
+                copyToClipboard(text) {
+                  if (this.isChecked) {
+                    text = text.replace("SpawnActor", "SpawnActorTamed");
+                  }
+                  const textarea = document.createElement('textarea');
+                  textarea.value = text;
+                  textarea.setAttribute('readonly', '');
+                  textarea.style.position = 'absolute';
+                  textarea.style.left = '-9999px';
+                  document.body.appendChild(textarea);
+                  textarea.select();
+                  document.execCommand('copy');
+                  document.body.removeChild(textarea);
+                },
+
+                
+                setRect(w, h, x = -1, y = -1) {
+                    var boxW = w;
+                    var boxH = h;
+                    var ayMenu = this.$refs.menuMain;
+                    ayMenu.style.width = `${boxW}px`;
+                    ayMenu.style.height = `${boxH}px`;
+                    if (x == -1) ayMenu.style.left = `calc(50% - ${boxW / 2}px)`;
+                    if (y == -1) ayMenu.style.top = `calc(50% - ${boxH / 2}px)`;
+                },
+                titleTouchStart(event) {
+                    this.touchStartX = parseInt(event.touches[0].clientX);
+                    this.touchStartY = parseInt(event.touches[0].clientY);
+                    var ayMenu = this.$refs.menuMain;
+                    this.menuLastX = ayMenu.offsetLeft;
+                    this.menuLastY = ayMenu.offsetTop;
+                },
+                titleTouchMove(event) {
+                    event.preventDefault();
+                    var distanceX = event.touches[0].clientX - this.touchStartX;
+                    var distanceY = event.touches[0].clientY - this.touchStartY;
+                    var ayMenu = this.$refs.menuMain;
+                    ayMenu.style.left = this.menuLastX + distanceX + "px";
+                    ayMenu.style.top = this.menuLastY + distanceY + "px";
+                },
+                changeTab(v) {
+                    this.tabValue = v;
+                },
+                
+                updateCommandValue() {
+                  this.lastNumber = this.commandSliderValue;
+                },
+                closeimgui() {
+                    var menu = document.querySelector("#app");
+                    setWindowTouch(false);
+                    menu.style.display = 'none';
+                    this.showCommands = true;
+                },
+                
+                toggleSearch() {
+                  this.isSearchExpanded = !this.isSearchExpanded;
+                  if (this.isSearchExpanded === false) {
+                    this.searchProxy = "";
+                  }
+                }
+            }
+        });
+        
+        function slider() {
+            var sliderValue = document.getElementById("my-slider").value;
+            document.getElementById("slider-value").innerHTML = sliderValue;
+        }
+        
+    </script>
+</body>
+</html>
+
+    
+
+
